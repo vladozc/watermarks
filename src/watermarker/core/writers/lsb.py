@@ -6,7 +6,7 @@ from PIL import Image
 
 from watermarker.core.watermark import Watermark, WatermarkFile, WatermarkImg
 
-ALLOWED_FORMATS = ('bmp', 'png', 'gif')
+ALLOWED_FORMATS = ('BMP', 'PNG', 'GIF')
 logger = logging.getLogger()
 
 
@@ -43,13 +43,14 @@ class Lsb(object):
                 self._process_file(full_filepath)
 
     def _process_file(self, filepath):
-        base_name, src_format = os.path.splitext(os.path.basename(filepath))
-        if src_format[1:].lower() not in ALLOWED_FORMATS:
+        src_img = Image.open(filepath)
+        base_name, _ = os.path.splitext(os.path.basename(filepath))
+        if src_img.format not in ALLOWED_FORMATS:
             logger.warning('File "%s" is in not allowed format. (skip)', filepath)
             return
 
-        src_img = Image.open(filepath)
         if src_img.mode in self.allowed_modes:
+            base_name, _ = os.path.splitext(os.path.basename(filepath))
             logger.info('Processing file "%s"', filepath)
             src_img.load()
             bands = src_img.split()
