@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from nose.tools import assert_equal
 from PIL import Image
@@ -18,8 +19,9 @@ def setup_module():
     generate_test_cases.main()
 
 
-def run_and_assert(filename, wm_data):
-    base, ext = os.path.splitext(filename)
+def run_and_assert(filename, wm_data, ext=None):
+    base, f_ext = os.path.splitext(filename)
+    ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
     reader = Lsb([filepath], DST_DIR, ext.lstrip('.'))
     reader.run()
@@ -76,3 +78,10 @@ def test_gen_rgb_bmp():
 def test_gen_rgb_png():
     run_and_assert('gen-rgb.png', WM1_255)
 
+
+def test_unknown_extension():
+    shutil.copyfile(
+        os.path.join(DATA_DIR, 'gen-rgb.png'),
+        os.path.join(DATA_DIR, 'gen-rgb.unknownextension'),
+    )
+    run_and_assert('gen-rgb.unknownextension', WM1_255, ext='.png')
