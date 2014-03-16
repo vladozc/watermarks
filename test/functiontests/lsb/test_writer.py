@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from nose.tools import assert_equal
 from PIL import Image
@@ -12,8 +13,9 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data')
 DST_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'tmp')
 
 
-def run_and_assert(filename, wm_filename, wm_data):
-    base, ext = os.path.splitext(filename)
+def run_and_assert(filename, wm_filename, wm_data, ext=None):
+    base, f_ext = os.path.splitext(filename)
+    ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
     wm_filepath = os.path.join(DATA_DIR, wm_filename)
     writer = Lsb([filepath], DST_DIR, ext.lstrip('.'), wm_filepath)
@@ -69,4 +71,12 @@ def test_gen_rgb_bmp():
 
 def test_gen_rgb_png():
     run_and_assert('gen-rgb.png', 'wm-png-24-16b.png', WM1_WM)
+
+
+def test_unknown_extension():
+    shutil.copyfile(
+        os.path.join(DATA_DIR, 'gen-rgb.png'),
+        os.path.join(DATA_DIR, 'gen-rgb.unknownextension'),
+    )
+    run_and_assert('gen-rgb.unknownextension', 'wm-png-24-16b.png', WM1_WM, ext='.png')
 

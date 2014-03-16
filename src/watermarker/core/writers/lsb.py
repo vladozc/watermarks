@@ -44,7 +44,6 @@ class Lsb(object):
 
     def _process_file(self, filepath):
         src_img = Image.open(filepath)
-        base_name, _ = os.path.splitext(os.path.basename(filepath))
         if src_img.format not in ALLOWED_FORMATS:
             logger.warning('File "%s" is in not allowed format. (skip)', filepath)
             return
