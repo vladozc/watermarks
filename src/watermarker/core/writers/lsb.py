@@ -57,7 +57,10 @@ class Lsb(object):
             bands_wm = []
             for band in bands:
                 band_wm = Image.new('L', src_img.size)
-                band_wm.putdata([convert(orig_px, wm_px) for orig_px, wm_px in izip(band.getdata(), self.wm.band.getdata())])
+                band_wm.putdata([convert(orig_px, wm_px, self.wm.threshold) 
+                                 for orig_px, wm_px 
+                                 in izip(band.getdata(), self.wm.band.getdata())
+                                ])
                 bands_wm.append(band_wm)
             dst_img = Image.merge(src_img.mode, bands_wm)
             dst_img.save(dst_filepath)
@@ -66,7 +69,7 @@ class Lsb(object):
             logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
 
 
-def convert(orig_px, wm_px):
-    if wm_px == 0:
+def convert(orig_px, wm_px, threshold):
+    if wm_px <= threshold:
         return orig_px & 254
     return orig_px | 1

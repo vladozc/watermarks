@@ -1,2 +1,4 @@
 *.pyc
 test/tmp/
+test/data/gen-*
+
