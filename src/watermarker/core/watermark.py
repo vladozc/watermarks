@@ -4,6 +4,18 @@ from PIL import Image
 
 
 ALLOWED_FORMATS = ('bmp', 'jpg', 'jpeg', 'png')
+# mode color depth, http://effbot.org/imagingbook/concepts.htm
+MODE_DEPTHS = {
+    '1': 1,
+    'L': 8,
+    'P': 8,
+    'RGB': 8,
+    'RGBA': 8,
+    'CMYK': 8,
+    'YCbCr': 8,
+    #'I': 32,
+    #'F': 32,
+}
 logger = logging.getLogger()
 
 
@@ -20,6 +32,15 @@ class Watermark(object):
         self.img.load()
         self.width, self.height = self.img.size
         self.band = self.img.split()[0]
+        self.threshold = self.get_px_max_value() / 2
+
+    def get_px_max_value(self):
+        try:
+            return 2 ** MODE_DEPTHS[self.img.mode] - 1
+        except KeyError:
+            logger.critical('Watermark band "%s" is not supported!', 
+                            self.img.mode)
+            raise
 
 
 class WatermarkFile(Watermark):
