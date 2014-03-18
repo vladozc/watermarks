@@ -6,7 +6,7 @@ from PIL import Image
 
 from watermarker.core.writers.lsb import Lsb
 #import generate_test_cases
-from . import WM1_WM
+from . import WM1_WM, WM2
 
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data')
@@ -79,4 +79,20 @@ def test_unknown_extension():
         os.path.join(DATA_DIR, 'gen-rgb.unknownextension'),
     )
     run_and_assert('gen-rgb.unknownextension', 'wm-png-24-16b.png', WM1_WM, ext='.png')
+
+
+def test_wm_mode_1():
+    run_and_assert('gen-img.png', 'gen-wm-1.png', WM2)
+
+
+def test_wm_mode_l():
+    run_and_assert('gen-img.png', 'gen-wm-l.png', WM2)
+
+
+def test_wm_mode_rgb():
+    run_and_assert('gen-img.png', 'gen-wm-rgb.png', WM2)
+
+
+def test_wm_mode_rgba():
+    run_and_assert('gen-img.png', 'gen-wm-rgba.png', WM2)
 
