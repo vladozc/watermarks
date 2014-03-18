@@ -8,11 +8,9 @@ ALLOWED_FORMATS = ('bmp', 'jpg', 'jpeg', 'png')
 MODE_DEPTHS = {
     '1': 1,
     'L': 8,
-    'P': 8,
     'RGB': 8,
     'RGBA': 8,
     'CMYK': 8,
-    'YCbCr': 8,
     #'I': 32,
     #'F': 32,
 }
@@ -26,9 +24,6 @@ class Watermark(object):
         self.init()
 
     def init(self):
-        if self.img.mode != '1':
-            logger.info('Converting watermark image to correct color model.')
-            self.img = self.img.convert('1')
         self.img.load()
         self.width, self.height = self.img.size
         self.band = self.img.split()[0]
