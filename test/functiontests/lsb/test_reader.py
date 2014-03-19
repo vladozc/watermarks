@@ -5,18 +5,7 @@ from nose.tools import assert_equal
 from PIL import Image
 
 from watermarker.core.readers.lsb import Lsb
-import generate_test_cases
-from . import WM1_1, WM1_255
-
-
-DATA_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data')
-DST_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'tmp')
-
-
-def setup_module():
-    if not os.path.exists(DST_DIR):
-        os.mkdir(DST_DIR)
-    generate_test_cases.main()
+from . import WM1_1, WM1_255, DATA_DIR, DST_DIR
 
 
 def run_and_assert(filename, wm_data, ext=None):

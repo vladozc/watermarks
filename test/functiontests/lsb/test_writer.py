@@ -5,12 +5,7 @@ from nose.tools import assert_equal
 from PIL import Image
 
 from watermarker.core.writers.lsb import Lsb
-#import generate_test_cases
-from . import WM1_WM, WM2
-
-
-DATA_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data')
-DST_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'tmp')
+from . import WM1_WM, WM2, DATA_DIR, DST_DIR
 
 
 def run_and_assert(filename, wm_filename, wm_data, ext=None):
