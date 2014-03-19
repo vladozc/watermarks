@@ -1,36 +1,29 @@
 import os
+import sys
 
 from PIL import Image
 
 
-DST_PATH = os.path.join(
-    os.path.dirname(__file__),
-    '..',
-    'test',
-    'data',
-)
+def main(dst_path, img_modes_prefix, wm_modes_prefix):
+    generate_img_modes_types(dst_path, img_modes_prefix)
+    generate_wm_modes(dst_path, wm_modes_prefix)
 
 
-def main():
-    generate_img_modes_types()
-    generate_wm_modes()
-
-
-def generate_img_modes_types():
+def generate_img_modes_types(dst_path, prefix):
     band_data = [255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255]
     band_wm = Image.new('L', (10, 5))
     band_wm.putdata(band_data)
 
     for format_ in ('png', 'gif', 'bmp'):
         img = Image.merge('L', [band_wm])
-        img.save(os.path.join(DST_PATH, 'gen-g.%s' % format_))
+        img.save(os.path.join(dst_path, 'gen-%s-g.%s' % (prefix, format_)))
 
     for format_ in ('png', 'bmp'):
         img = Image.merge('RGB', [band_wm]*3)
-        img.save(os.path.join(DST_PATH, 'gen-rgb.%s' % format_))
+        img.save(os.path.join(dst_path, 'gen-%s-rgb.%s' % (prefix, format_)))
 
 
-def generate_wm_modes():
+def generate_wm_modes(dst_path, prefix):
     band_1 = Image.new('1', (16, 16))
     band_1.putdata([0] * 128 + [1] * 128)
     band_8 = Image.new('L', (16, 16))
@@ -39,26 +32,26 @@ def generate_wm_modes():
     band_a.putdata([255]*256)
 
     wm_1 = Image.merge('1', [band_1])
-    wm_1.save(os.path.join(DST_PATH, 'gen-wm-1.png'))
+    wm_1.save(os.path.join(dst_path, 'gen-%s-wm-1.png' % prefix))
 
     wm_l = Image.merge('L', [band_8])
-    wm_l.save(os.path.join(DST_PATH, 'gen-wm-l.png'))
+    wm_l.save(os.path.join(dst_path, 'gen-%s-wm-l.png' % prefix))
 
     wm_rgb = Image.merge('RGB', [band_8, band_8, band_8])
-    wm_rgb.save(os.path.join(DST_PATH, 'gen-wm-rgb.png'))
+    wm_rgb.save(os.path.join(dst_path, 'gen-%s-wm-rgb.png' % prefix))
 
     wm_rgba = Image.merge('RGBA', [band_8, band_8, band_8, band_a])
-    wm_rgba.save(os.path.join(DST_PATH, 'gen-wm-rgba.png'))
+    wm_rgba.save(os.path.join(dst_path, 'gen-%s-wm-rgba.png' % prefix))
 
     #wm_cmyk = Image.merge('CMYK', [band_8, band_8, band_8, band_8])
-    #wm_cmyk.save(os.path.join(DST_PATH, 'gen-wm-cmyk.jpg'))
+    #wm_cmyk.save(os.path.join(dst_path, 'gen-%s-wm-cmyk.jpg' % prefix))
 
     band_img = Image.new('L', (16, 16))
     band_img.putdata([255]*64 + [0]*64 + [255]*64 + [0]*64)
     img = Image.merge('L', [band_img])
-    img.save(os.path.join(DST_PATH, 'gen-img.png'))
+    img.save(os.path.join(dst_path, 'gen-%s-img.png' % prefix))
 
 
 if __name__ == '__main__':
-    main()
+    main(*sys.argv[1:])
 

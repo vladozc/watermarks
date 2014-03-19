@@ -5,12 +5,7 @@ from nose.tools import assert_equal
 from PIL import Image
 
 from watermarker.core.writers.lsb import Lsb
-#import generate_test_cases
-from . import WM1_WM, WM2
-
-
-DATA_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data')
-DST_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'tmp')
+from . import WM1_WM, WM2, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX
 
 
 def run_and_assert(filename, wm_filename, wm_data, ext=None):
@@ -54,45 +49,45 @@ def test_rgb_l9_png():
 
 
 def test_gen_l_bmp():
-    run_and_assert('gen-g.bmp', 'wm-png-24-16b.png', WM1_WM)
+    run_and_assert('gen-%s-g.bmp' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_gen_l_gif():
-    run_and_assert('gen-g.gif', 'wm-png-24-16b.png', WM1_WM)
+    run_and_assert('gen-%s-g.gif' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_gen_l_png():
-    run_and_assert('gen-g.png', 'wm-png-24-16b.png', WM1_WM)
+    run_and_assert('gen-%s-g.png' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_gen_rgb_bmp():
-    run_and_assert('gen-rgb.bmp', 'wm-png-24-16b.png', WM1_WM)
+    run_and_assert('gen-%s-rgb.bmp' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_gen_rgb_png():
-    run_and_assert('gen-rgb.png', 'wm-png-24-16b.png', WM1_WM)
+    run_and_assert('gen-%s-rgb.png' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_unknown_extension():
     shutil.copyfile(
-        os.path.join(DATA_DIR, 'gen-rgb.png'),
-        os.path.join(DATA_DIR, 'gen-rgb.unknownextension'),
+        os.path.join(DATA_DIR, 'gen-%s-rgb.png' % IM_PREFIX),
+        os.path.join(DATA_DIR, 'gen-%s-rgb.unknownextension' % IM_PREFIX),
     )
-    run_and_assert('gen-rgb.unknownextension', 'wm-png-24-16b.png', WM1_WM, ext='.png')
+    run_and_assert('gen-%s-rgb.unknownextension' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM, ext='.png')
 
 
 def test_wm_mode_1():
-    run_and_assert('gen-img.png', 'gen-wm-1.png', WM2)
+    run_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-1.png' % WM_PREFIX, WM2)
 
 
 def test_wm_mode_l():
-    run_and_assert('gen-img.png', 'gen-wm-l.png', WM2)
+    run_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-l.png' % WM_PREFIX, WM2)
 
 
 def test_wm_mode_rgb():
-    run_and_assert('gen-img.png', 'gen-wm-rgb.png', WM2)
+    run_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-rgb.png' % WM_PREFIX, WM2)
 
 
 def test_wm_mode_rgba():
-    run_and_assert('gen-img.png', 'gen-wm-rgba.png', WM2)
+    run_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-rgba.png' % WM_PREFIX, WM2)
 
