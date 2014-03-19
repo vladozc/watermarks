@@ -21,5 +21,5 @@ WM_PREFIX = 'wmode'
 def setup_module():
     if not os.path.exists(DST_DIR):
         os.mkdir(DST_DIR)
-    generate_test_cases.main(IM_PREFIX, WM_PREFIX)
+    generate_test_cases.main(DATA_DIR, IM_PREFIX, WM_PREFIX)
 
