@@ -14,9 +14,12 @@ WM2 = [254]*64 + [0]*64 + [255]*64 + [1]*64
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data')
 DST_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'tmp')
 
+IM_PREFIX = 'imode'
+WM_PREFIX = 'wmode'
+
 
 def setup_module():
     if not os.path.exists(DST_DIR):
         os.mkdir(DST_DIR)
-    generate_test_cases.main()
+    generate_test_cases.main(IM_PREFIX, WM_PREFIX)
 

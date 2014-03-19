@@ -5,7 +5,7 @@ from nose.tools import assert_equal
 from PIL import Image
 
 from watermarker.core.readers.lsb import Lsb
-from . import WM1_1, WM1_255, DATA_DIR, DST_DIR
+from . import WM1_1, WM1_255, DATA_DIR, DST_DIR, IM_PREFIX
 
 
 def run_and_assert(filename, wm_data, ext=None):
@@ -49,28 +49,28 @@ def test_rgb_l9_png():
 
 
 def test_gen_l_bmp():
-    run_and_assert('gen-g.bmp', WM1_255)
+    run_and_assert('gen-%s-g.bmp' % IM_PREFIX, WM1_255)
 
 
 def test_gen_l_gif():
-    run_and_assert('gen-g.gif', WM1_255)
+    run_and_assert('gen-%s-g.gif' % IM_PREFIX, WM1_255)
 
 
 def test_gen_l_png():
-    run_and_assert('gen-g.png', WM1_255)
+    run_and_assert('gen-%s-g.png' % IM_PREFIX, WM1_255)
 
 
 def test_gen_rgb_bmp():
-    run_and_assert('gen-rgb.bmp', WM1_255)
+    run_and_assert('gen-%s-rgb.bmp' % IM_PREFIX, WM1_255)
 
 
 def test_gen_rgb_png():
-    run_and_assert('gen-rgb.png', WM1_255)
+    run_and_assert('gen-%s-rgb.png' % IM_PREFIX, WM1_255)
 
 
 def test_unknown_extension():
     shutil.copyfile(
-        os.path.join(DATA_DIR, 'gen-rgb.png'),
-        os.path.join(DATA_DIR, 'gen-rgb.unknownextension'),
+        os.path.join(DATA_DIR, 'gen-%s-rgb.png' % IM_PREFIX),
+        os.path.join(DATA_DIR, 'gen-%s-rgb.unknownextension' % IM_PREFIX),
     )
-    run_and_assert('gen-rgb.unknownextension', WM1_255, ext='.png')
+    run_and_assert('gen-%s-rgb.unknownextension' % IM_PREFIX, WM1_255, ext='.png')
