@@ -19,7 +19,17 @@ WM_PREFIX = 'wmode'
 
 
 def setup_module():
+    clean()
     if not os.path.exists(DST_DIR):
         os.mkdir(DST_DIR)
     generate_test_cases.main(DATA_DIR, IM_PREFIX, WM_PREFIX)
 
+
+def teardown_module():
+    clean()
+
+
+def clean():
+    if os.path.isdir(DST_DIR):
+        for filename in os.listdir(DST_DIR):
+            os.unlink(os.path.join(DST_DIR, filename))
