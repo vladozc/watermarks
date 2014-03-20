@@ -18,11 +18,12 @@ class Lsb(object):
 
     allowed_modes = ('CMYK', 'L', 'RGB')
 
-    def __init__(self, paths, destination, format, wm_filepath):
+    def __init__(self, paths, destination, format, wm_filepath, suffix='_watermarked'):
         self.paths = paths
         self.destination = destination
         self.format = format
         self.wm = WatermarkFile(wm_filepath)
+        self.suffix = suffix
 
     def run(self):
         for path in self.paths:
@@ -53,7 +54,7 @@ class Lsb(object):
             logger.info('Processing file "%s"', filepath)
             src_img.load()
             bands = src_img.split()
-            dst_filepath = os.path.join(self.destination, '%s_watermarked.%s' % (base_name, self.format))
+            dst_filepath = os.path.join(self.destination, '%s%s.%s' % (base_name, self.suffix, self.format))
             bands_wm = []
             for band in bands:
                 band_wm = Image.new('L', src_img.size)

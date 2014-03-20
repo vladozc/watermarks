@@ -1,5 +1,5 @@
 *.pyc
 *.swp
-test/tmp/
+tmp/
 test/data/gen-*
 

@@ -15,9 +15,8 @@ def run_and_assert(filename, wm_data, ext=None):
     reader = Lsb([filepath], DST_DIR, ext.lstrip('.'))
     reader.run()
     src_img = Image.open(filepath)
-    len_bands = len(src_img.getbands())
-    for band_index in xrange(len_bands):
-        res_filename = '%s_%d%s' % (base, band_index, ext)
+    for band_name in src_img.getbands():
+        res_filename = '%s_%s%s' % (base, band_name, ext)
         res_filepath = os.path.join(DST_DIR, res_filename)
         res_img = Image.open(res_filepath)
         res_img.load()
