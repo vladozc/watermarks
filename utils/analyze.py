@@ -6,7 +6,7 @@ from PIL import Image
 
 def main():
     verbose = 1 if sys.argv[1] == '-v' else 0
-    for i in xrange(1 + verbose, len(sys.argv)):
+    for i in range(1 + verbose, len(sys.argv)):
         analyze(sys.argv[i], verbose)
 
 

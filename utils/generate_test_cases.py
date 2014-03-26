@@ -27,7 +27,7 @@ def generate_wm_modes(dst_path, prefix):
     band_1 = Image.new('1', (16, 16))
     band_1.putdata([0] * 128 + [1] * 128)
     band_8 = Image.new('L', (16, 16))
-    band_8.putdata(xrange(256))
+    band_8.putdata(range(256))
     band_a = Image.new('L', (16, 16))
     band_a.putdata([255]*256)
 
