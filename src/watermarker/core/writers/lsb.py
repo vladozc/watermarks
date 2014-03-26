@@ -1,4 +1,3 @@
-from itertools import izip
 import logging
 import os
 
@@ -60,7 +59,7 @@ class Lsb(object):
                 band_wm = Image.new('L', src_img.size)
                 band_wm.putdata([convert(orig_px, wm_px, self.wm.threshold) 
                                  for orig_px, wm_px 
-                                 in izip(band.getdata(), self.wm.band.getdata())
+                                 in zip(band.getdata(), self.wm.band.getdata())
                                 ])
                 bands_wm.append(band_wm)
             dst_img = Image.merge(src_img.mode, bands_wm)

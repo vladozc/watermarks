@@ -1,4 +1,3 @@
-from itertools import izip
 import logging
 import os
 
@@ -51,7 +50,7 @@ class Lsb(object):
             logger.info('Processing file "%s"', filepath)
             src_img.load()
             bands = src_img.split()
-            for band_name, band in izip(src_img.getbands(), bands):
+            for band_name, band in zip(src_img.getbands(), bands):
                 dst_filepath = os.path.join(self.destination, '%s_%s.%s' % (base_name, band_name, self.format))
                 bw = band.point(convert)
                 dst_band = 'P' if src_img.mode == 'P' else 'L'
