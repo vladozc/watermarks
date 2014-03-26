@@ -1,5 +1,14 @@
-'''
+'''Generate profile statistics.
+
+Something similar can be done with commands:
+PYTHONPATH=src python -m cProfile -o reader_lsb.profile bin/reader.py -m lsb -d tmp/ test/data/shape1-rgb-l9.png
+PYTHONPATH=src python -m cProfile -o writer_lsb.profile bin/writer.py -m lsb -d tmp/ -w test/data/shape1-rgb-l9.png test/data/shape1-rgb-l9.png
+
+However, the runner overheat is very high for small pictures.
+
+Command to generate image from the profile result:
 python ~/bin/gprof2dot.py -f pstats reader_lsb.profile | dot -Tpng -o output.png
+(you need to download gprof2dot.py first - http://gprof2dot.jrfonseca.googlecode.com/git/gprof2dot.py)
 '''
 import cProfile
 import logging
@@ -37,7 +46,7 @@ def profile_writer_lsb():
 
 def run_reader_lsb():
     filepath = os.path.join(os.path.dirname(__file__), '..', 'test', 'data', 'shape1-rgb-l9.png')
-    dest_dir = os.path.join(os.path.dirname(__file__), '..', 'test', 'tmp')
+    dest_dir = os.path.join(os.path.dirname(__file__), '..', 'tmp')
     reader = watermarker.core.readers.lsb.Lsb([filepath], dest_dir, 'png')
     reader.run()
 
@@ -45,7 +54,7 @@ def run_reader_lsb():
 def run_writer_lsb():
     filepath = os.path.join(os.path.dirname(__file__), '..', 'test', 'data', 'shape1-rgb-l9.png')
     wm_filepath = os.path.join(os.path.dirname(__file__), '..', 'test', 'data', 'shape1-rgb-l9.png')
-    dest_dir = os.path.join(os.path.dirname(__file__), '..', 'test', 'tmp')
+    dest_dir = os.path.join(os.path.dirname(__file__), '..', 'tmp')
     writer = watermarker.core.writers.lsb.Lsb([filepath], dest_dir, 'png', wm_filepath)
     writer.run()
 
