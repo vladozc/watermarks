@@ -5,13 +5,18 @@ logger = logging.getLogger()
 
 
 class Loader(object):
-
+    '''Class responsible for loading and running watermark method.
+    Method will first be searched in local modules and if it will not be
+    found, Loader will try to find it in global scope (so you can use
+    your own methods.
+    '''
     def __init__(self, type_, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
         self.type = type_
 
     def run(self, args):
+        '''Runs desired watermark method with `args`.'''
         module = self._load_method(args.method)
         x = module.init(args)
         return x.run()

@@ -10,11 +10,18 @@ logger = logging.getLogger()
 
 
 def init(args):
+    '''Returns initialized Lsb (reader) object from arguments passed from
+    command line.
+    '''
     return Lsb(args.sources, args.dest_dir, args.format, args.watermark)
 
 
 class Lsb(object):
-
+    '''Lsb (least significant bit) is method that changes least significant
+    (last) bit for every subpixel in image according to reference image.
+    With this approach you can generate new image almost identical to
+    original image but with your hidden watermark.
+    '''
     allowed_modes = ('CMYK', 'L', 'RGB')
 
     def __init__(self, paths, destination, format, wm_filepath, suffix='_watermarked'):
@@ -70,6 +77,7 @@ class Lsb(object):
 
 
 def convert(orig_px, wm_px, threshold):
+    '''Returns modified (last bit) value for subpixel.'''
     if wm_px <= threshold:
         return orig_px & 254
     return orig_px | 1

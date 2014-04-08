@@ -18,7 +18,9 @@ logger = logging.getLogger()
 
 
 class Watermark(object):
-
+    '''Basic class for image that will be put to other image as watermark.
+    As input, it works with raw image data.
+    '''
     def __init__(self, img):
         self.img = img
         self.init()
@@ -39,7 +41,7 @@ class Watermark(object):
 
 
 class WatermarkFile(Watermark):
-
+    '''Watermark image specified by filepath.'''
     def __init__(self, filepath, *args, **kwargs):
         self.filepath = filepath
         img = Image.open(filepath)
@@ -47,9 +49,9 @@ class WatermarkFile(Watermark):
 
 
 class WatermarkImg(Watermark):
-
+    '''Watermark image with specified size.'''
     def __init__(self, img, width, height, *args, **kwargs):
         sized_img = Image.new('1', (width, height), 'white')
-        # todo: merge img to sized_img
+        # todo: merge img to sized_img (center)
         super(WatermarkFile, self).__init__(img=sized_img, *args, **kwargs)
 

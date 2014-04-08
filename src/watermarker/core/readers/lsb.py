@@ -9,14 +9,41 @@ logger = logging.getLogger()
 
 
 def init(args):
+    '''Returns initialized Lsb (reader) object from arguments passed from
+    command line.
+    '''
     return Lsb(args.sources, args.dest_dir, args.format)
 
 
 class Lsb(object):
+    '''Lsb (least significant bit) is method that extracts least significat
+    (last) bit from every subpixel and generates image - black pixel for
+    subpixels ending with 0 (even) and white pixel for subpixels ending
+    with 1 (odd). These generated images we call Watermarks.
 
+    This class wraps the functionality. It allows to extract watermark
+    from more images at once. To do so, just pass list of images (folders)
+    to constructor (argument `paths`). If the path is folder, it is scanned
+    for images inside (not recursive). `destination` is path where extracted
+    watermarks will be stored and `format` is their format (e.g. png).
+
+    Class will generate watermark for each band separately. Generated
+    watermark filepath is:
+    "<destination>/<original filename>_<band shortcut>.<format>"
+    '''
     allowed_modes = ('CMYK', 'L', 'RGB')
 
     def __init__(self, paths, destination, format):
+        '''
+        :param list paths:
+            Filepaths/folders to be processed.
+
+        :param str destination:
+            Destination where extracted watermarks will be stored.
+
+        :param str format:
+            Watermark format.
+        '''
         self.paths = paths
         self.destination = destination
         self.format = format
@@ -62,4 +89,7 @@ class Lsb(object):
 
 
 def convert(x):
+    '''Converts subpixel value to 0 or 255 depending on least significant
+    bit.
+    '''
     return 255 if (x & 1) else 0
