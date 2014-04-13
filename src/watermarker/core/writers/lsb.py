@@ -5,7 +5,7 @@ from PIL import Image
 
 from watermarker.core.watermark import Watermark, WatermarkFile, WatermarkImg
 
-ALLOWED_FORMATS = ('BMP', 'PNG', 'GIF')
+ALLOWED_FORMATS = ('BMP', 'PNG', 'GIF', 'JPEG')
 logger = logging.getLogger()
 
 
