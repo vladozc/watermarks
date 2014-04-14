@@ -5,7 +5,7 @@ from nose.tools import assert_equal
 from PIL import Image
 
 from watermarker.core.writers.lsb import Lsb
-from . import WM1_WM, WM2, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX
+from . import WM1_WM, WM1_WM_JPG, WM2, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX
 
 
 def run_and_assert(filename, wm_filename, wm_data, ext=None):
@@ -63,6 +63,10 @@ def test_gen_l_png():
 
 def test_gen_rgb_bmp():
     run_and_assert('gen-%s-rgb.bmp' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
+
+
+def test_gen_rgb_jpg():
+    run_and_assert('gen-%s-rgb.jpg' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM_JPG)
 
 
 def test_gen_rgb_png():
