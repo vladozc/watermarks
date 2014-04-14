@@ -18,7 +18,7 @@ def generate_img_modes_types(dst_path, prefix):
         img = Image.merge('L', [band_wm])
         img.save(os.path.join(dst_path, 'gen-%s-g.%s' % (prefix, format_)))
 
-    for format_ in ('png', 'bmp'):
+    for format_ in ('png', 'bmp', 'jpg'):
         img = Image.merge('RGB', [band_wm]*3)
         img.save(os.path.join(dst_path, 'gen-%s-rgb.%s' % (prefix, format_)))
 
