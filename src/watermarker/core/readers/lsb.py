@@ -16,12 +16,7 @@ def init(args):
 
 
 class Lsb(object):
-    '''Lsb (least significant bit) is method that extracts least significat
-    (last) bit from every subpixel and generates image - black pixel for
-    subpixels ending with 0 (even) and white pixel for subpixels ending
-    with 1 (odd). These generated images we call Watermarks.
-
-    This class wraps the functionality. It allows to extract watermark
+    '''Class wraps the LSB functionality. It allows to extract watermark
     from more images at once. To do so, just pass list of images (folders)
     to constructor (argument `paths`). If the path is folder, it is scanned
     for images inside (not recursive). `destination` is path where extracted
