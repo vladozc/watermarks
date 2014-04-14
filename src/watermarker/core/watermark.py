@@ -3,7 +3,7 @@ import logging
 from PIL import Image
 
 
-ALLOWED_FORMATS = ('bmp', 'jpg', 'jpeg', 'png')
+ALLOWED_FORMATS = ('BMP', 'JPEG', 'PNG')
 # mode color depth, http://effbot.org/imagingbook/concepts.htm
 MODE_DEPTHS = {
     '1': 1,
@@ -43,6 +43,10 @@ class WatermarkFile(Watermark):
     def __init__(self, filepath, *args, **kwargs):
         self.filepath = filepath
         img = Image.open(filepath)
+        if img.format not in ALLOWED_FORMATS:
+            logger.warning('Watermark file "%s" is in not allowed format. '
+                           '(skip)', filepath)
+            raise
         super(WatermarkFile, self).__init__(img=img, *args, **kwargs)
 
 
