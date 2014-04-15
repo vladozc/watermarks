@@ -7,7 +7,7 @@
 .. include:: overview.rst
 .. include:: installation.rst
 .. include:: usage.rst
-.. include:: testing.rst
+.. include:: running_tests.rst
 .. include:: methods/index.rst
 .. include:: custom_methods.rst
 

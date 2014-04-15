@@ -1,6 +1,7 @@
 *.pyc
 *.swp
 e_python*
+doc/build/
 tmp/
 test/data/gen-*
 
