@@ -13,7 +13,8 @@ def init(args):
     '''Returns initialized Lsb (reader) object from arguments passed from
     command line.
     '''
-    return Lsb(args.sources, args.dest_dir, args.format, args.watermark)
+    wm = WatermarkFile(args.watermark)
+    return Lsb(args.sources, args.dest_dir, args.format, wm)
 
 
 class Lsb(object):
@@ -24,7 +25,7 @@ class Lsb(object):
     '''
     allowed_modes = ('CMYK', 'L', 'RGB')
 
-    def __init__(self, paths, destination, format, wm_filepath, suffix='_watermarked'):
+    def __init__(self, paths, destination, format, wm, suffix='_watermarked'):
         '''
         :param list paths:
             Filepaths/folders to be processed.
@@ -35,8 +36,8 @@ class Lsb(object):
         :param str format:
             Output format.
 
-        :param str wm_filepath:
-            Watermark filename including path.
+        :param watermarker.core.watermark wm:
+            Watermark instance.
 
         :param str suffix:
             Suffix added to generated files. If set to empty string,
@@ -45,7 +46,7 @@ class Lsb(object):
         self.paths = paths
         self.destination = destination
         self.format = format
-        self.wm = WatermarkFile(wm_filepath)
+        self.wm = wm
         self.suffix = suffix
 
     def run(self):
