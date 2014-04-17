@@ -14,6 +14,7 @@ def analyze(filepath, verbose):
     img = Image.open(filepath)
     print 'Name:\t', os.path.basename(filepath)
     print 'Mode:\t', img.mode
+    print 'Size:\t', img.size
     print 'Bands:\t', img.getbands()
     if verbose:
         img.load()
