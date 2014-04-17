@@ -57,7 +57,7 @@ class WatermarkFile(Watermark):
 class WatermarkImg(Watermark):
     '''Watermark image with specified size.'''
     def __init__(self, img, width, height, *args, **kwargs):
-        sized_img = Image.new('1', (width, height), 'white')
-        # todo: merge img to sized_img (center)
+        sized_img = Image.new(img.mode, (width, height), 'white')
+        sized_img.paste(img, None)
         super(WatermarkFile, self).__init__(img=sized_img, *args, **kwargs)
 
