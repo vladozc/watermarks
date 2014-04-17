@@ -26,12 +26,14 @@ class Watermark(object):
         self.init()
 
     def init(self):
+        '''Initializes watermark - load, set width/height, ...'''
         self.img.load()
         self.width, self.height = self.img.size
         self.band = self.img.split()[0]
         self.threshold = self.get_px_max_value() / 2
 
     def get_px_max_value(self):
+        '''Determines maximum pixel value according to used mode.'''
         try:
             return 2 ** MODE_DEPTHS[self.img.mode] - 1
         except KeyError:

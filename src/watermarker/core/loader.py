@@ -11,6 +11,11 @@ class Loader(object):
     your own methods.
     '''
     def __init__(self, type_, *args, **kwargs):
+        '''
+        :param str type_:
+            readers/writers This parameter is used only for local methods
+            and it is part of import path.
+        '''
         self.args = args
         self.kwargs = kwargs
         self.type = type_

@@ -44,6 +44,7 @@ class Lsb(object):
         self.format = format
 
     def run(self):
+        '''Runs the process.'''
         for path in self.paths:
             if not os.path.exists(path):
                 logger.error('Path "%s" does not exist! (skip)', path)
@@ -86,5 +87,11 @@ class Lsb(object):
 def convert(x):
     '''Converts subpixel value to 0 or 255 depending on least significant
     bit.
+
+    :param int x:
+        Current subpixel value.
+    :return:
+        New subpixel value.
+    :rtype: int
     '''
     return 255 if (x & 1) else 0
