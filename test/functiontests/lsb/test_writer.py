@@ -15,10 +15,9 @@ def run_and_assert(filename, wm_filename, wm_data, ext=None):
     wm_filepath = os.path.join(DATA_DIR, wm_filename)
     suffix = '_watermarked_test'
     writer = Lsb([filepath], DST_DIR, ext.lstrip('.'), wm_filepath, suffix)
-    writer.run()
-    src_img = Image.open(filepath)
-    res_filename = '%s%s%s' % (base, suffix, ext)
-    res_filepath = os.path.join(DST_DIR, res_filename)
+    results = writer.run()
+    assert_equal(len(results), 1)
+    res_filepath = results[0]
     res_img = Image.open(res_filepath)
     res_img.load()
     for band in res_img.split():
