@@ -10,14 +10,38 @@ logger = logging.getLogger()
 
 
 def init(args):
+    '''Returns initialized Lsb (reader) object from arguments passed from
+    command line.
+    '''
     return Lsb(args.sources, args.dest_dir, args.format, args.watermark)
 
 
 class Lsb(object):
-
+    '''Lsb (least significant bit) is method that changes least significant
+    (last) bit for every subpixel in image according to reference image.
+    With this approach you can generate new image almost identical to
+    original image but with your hidden watermark.
+    '''
     allowed_modes = ('CMYK', 'L', 'RGB')
 
     def __init__(self, paths, destination, format, wm_filepath, suffix='_watermarked'):
+        '''
+        :param list paths:
+            Filepaths/folders to be processed.
+
+        :param str destination:
+            Destination where watermarked images will be stored.
+
+        :param str format:
+            Output format.
+
+        :param str wm_filepath:
+            Watermark filename including path.
+
+        :param str suffix:
+            Suffix added to generated files. If set to empty string,
+            generated image will overwrite original image.
+        '''
         self.paths = paths
         self.destination = destination
         self.format = format
@@ -25,6 +49,7 @@ class Lsb(object):
         self.suffix = suffix
 
     def run(self):
+        '''Runs the process.'''
         for path in self.paths:
             if not os.path.exists(path):
                 logger.error('Path "%s" does not exist! (skip)', path)
@@ -70,6 +95,19 @@ class Lsb(object):
 
 
 def convert(orig_px, wm_px, threshold):
+    '''Returns modified (last bit) value for subpixel.
+
+    :param int orig_px:
+        Current image subpixel value.
+    :param int wm_px:
+        Watermark subpixel value.
+    :param int threshold:
+        If `wm_px` is less or equal than this value, `orig_px` will
+        change it's last bit value to 0 and to 1 if greater.
+    :return:
+        New subpixel value.
+    :rtype: int
+    '''
     if wm_px <= threshold:
         return orig_px & 254
     return orig_px | 1

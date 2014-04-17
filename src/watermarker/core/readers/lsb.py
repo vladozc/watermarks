@@ -9,19 +9,42 @@ logger = logging.getLogger()
 
 
 def init(args):
+    '''Returns initialized Lsb (reader) object from arguments passed from
+    command line.
+    '''
     return Lsb(args.sources, args.dest_dir, args.format)
 
 
 class Lsb(object):
+    '''Class wraps the LSB functionality. It allows to extract watermark
+    from more images at once. To do so, just pass list of images (folders)
+    to constructor (argument `paths`). If the path is folder, it is scanned
+    for images inside (not recursive). `destination` is path where extracted
+    watermarks will be stored and `format` is their format (e.g. png).
 
+    Class will generate watermark for each band separately. Generated
+    watermark filepath is:
+    "<destination>/<original filename>_<band shortcut>.<format>"
+    '''
     allowed_modes = ('CMYK', 'L', 'RGB')
 
     def __init__(self, paths, destination, format):
+        '''
+        :param list paths:
+            Filepaths/folders to be processed.
+
+        :param str destination:
+            Destination where extracted watermarks will be stored.
+
+        :param str format:
+            Watermark format.
+        '''
         self.paths = paths
         self.destination = destination
         self.format = format
 
     def run(self):
+        '''Runs the process.'''
         for path in self.paths:
             if not os.path.exists(path):
                 logger.error('Path "%s" does not exist! (skip)', path)
@@ -62,4 +85,13 @@ class Lsb(object):
 
 
 def convert(x):
+    '''Converts subpixel value to 0 or 255 depending on least significant
+    bit.
+
+    :param int x:
+        Current subpixel value.
+    :return:
+        New subpixel value.
+    :rtype: int
+    '''
     return 255 if (x & 1) else 0
