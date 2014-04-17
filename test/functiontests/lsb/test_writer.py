@@ -4,7 +4,7 @@ import shutil
 from nose.tools import assert_equal
 from PIL import Image
 
-from watermarker.core.watermark import WatermarkFile
+from watermarker.core.watermark import create_watermark
 from watermarker.core.writers.lsb import Lsb
 from . import WM1_WM, WM1_WM_JPG, WM2, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX
 
@@ -15,7 +15,7 @@ def run_and_assert(filename, wm_filename, wm_data, ext=None):
     filepath = os.path.join(DATA_DIR, filename)
     wm_filepath = os.path.join(DATA_DIR, wm_filename)
     suffix = '_watermarked_test'
-    wm = WatermarkFile(wm_filepath)
+    wm = create_watermark(wm_filepath)
     writer = Lsb([filepath], DST_DIR, ext.lstrip('.'), wm, suffix)
     results = writer.run()
     assert_equal(len(results), 1)

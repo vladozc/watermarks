@@ -23,10 +23,12 @@ class Watermark(object):
     '''
     def __init__(self, img):
         self.img = img
-        self.init()
 
     def init(self):
         '''Initializes watermark - load, set width/height, ...'''
+        if self.img.format not in ALLOWED_FORMATS:
+            logger.warning('Watermark is in not allowed format. (skip)')
+            raise ValueError()
         self.img.load()
         self.width, self.height = self.img.size
         self.band = self.img.split()[0]
@@ -42,22 +44,16 @@ class Watermark(object):
             raise
 
 
-class WatermarkFile(Watermark):
-    '''Watermark image specified by filepath.'''
-    def __init__(self, filepath, *args, **kwargs):
-        self.filepath = filepath
-        img = Image.open(filepath)
-        if img.format not in ALLOWED_FORMATS:
-            logger.warning('Watermark file "%s" is in not allowed format. '
-                           '(skip)', filepath)
-            raise
-        super(WatermarkFile, self).__init__(img=img, *args, **kwargs)
+def create_watermark(wm, width=None, height=None, *args, **kwargs):
+    if isinstance(wm, basestring):
+        wm = Image.open(wm)
 
+    if width and height:
+        img_w, img_h = img.size
+        if img_w != width or img_h != height:
+            # TODO
+            pass
 
-class WatermarkImg(Watermark):
-    '''Watermark image with specified size.'''
-    def __init__(self, img, width, height, *args, **kwargs):
-        sized_img = Image.new('1', (width, height), 'white')
-        # todo: merge img to sized_img (center)
-        super(WatermarkFile, self).__init__(img=sized_img, *args, **kwargs)
-
+    wm_instance = Watermark(wm, *args, **kwargs)
+    wm_instance.init()
+    return wm_instance

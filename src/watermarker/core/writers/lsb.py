@@ -3,7 +3,7 @@ import os
 
 from PIL import Image
 
-from watermarker.core.watermark import Watermark, WatermarkFile, WatermarkImg
+from watermarker.core.watermark import create_watermark 
 
 ALLOWED_FORMATS = ('BMP', 'PNG', 'GIF', 'JPEG')
 logger = logging.getLogger()
@@ -13,7 +13,7 @@ def init(args):
     '''Returns initialized Lsb (reader) object from arguments passed from
     command line.
     '''
-    wm = WatermarkFile(args.watermark)
+    wm = create_watermark(args.watermark)
     return Lsb(args.sources, args.dest_dir, args.format, wm)
 
 
