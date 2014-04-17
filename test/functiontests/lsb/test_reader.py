@@ -13,11 +13,10 @@ def run_and_assert(filename, wm_data, ext=None):
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
     reader = Lsb([filepath], DST_DIR, ext.lstrip('.'))
-    reader.run()
+    results = reader.run()
     src_img = Image.open(filepath)
-    for band_name in src_img.getbands():
-        res_filename = '%s_%s%s' % (base, band_name, ext)
-        res_filepath = os.path.join(DST_DIR, res_filename)
+    assert_equal(len(results), len(src_img.getbands()))
+    for res_filepath in results:
         res_img = Image.open(res_filepath)
         res_img.load()
         assert_equal(list(res_img.getdata()), wm_data)

@@ -44,23 +44,32 @@ class Lsb(object):
         self.format = format
 
     def run(self):
-        '''Runs the process.'''
+        '''Runs the process.
+
+        :return:
+            List of generated files.
+        :rtype: list
+        '''
+        processed = []
         for path in self.paths:
             if not os.path.exists(path):
                 logger.error('Path "%s" does not exist! (skip)', path)
             elif os.path.isdir(path):
-                self._process_dir(path)
+                processed.extend(self._process_dir(path))
             elif os.path.isfile(path):
-                self._process_file(path)
+                processed.extend(self._process_file(path))
             else:
                 raise NotImplementedError('Cannot determine type of %s', path)
-        return 0
+        return filter(None, processed)
 
     def _process_dir(self, dirpath):
+        processed = []
         for filename in os.listdir(dirpath):
             full_filepath = os.path.join(dirpath, filename)
             if os.path.isfile(full_filepath):
-                self._process_file(full_filepath)
+                res = self._process_file(full_filepath)
+                processed.extend(res)
+        return processed
 
     def _process_file(self, filepath):
         src_img = Image.open(filepath)
@@ -69,6 +78,7 @@ class Lsb(object):
             return
 
         if src_img.mode in self.allowed_modes:
+            generated_filepaths = []
             base_name, _ = os.path.splitext(os.path.basename(filepath))
             logger.info('Processing file "%s"', filepath)
             src_img.load()
@@ -80,6 +90,8 @@ class Lsb(object):
                 dst_img = Image.merge(dst_band, (bw, ))
                 dst_img.save(dst_filepath)
                 logger.info('Generated file "%s".', dst_filepath)
+                generated_filepaths.append(dst_filepath)
+            return generated_filepaths
         else:
             logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
 
