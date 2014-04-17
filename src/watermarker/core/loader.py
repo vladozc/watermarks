@@ -10,14 +10,12 @@ class Loader(object):
     found, Loader will try to find it in global scope (so you can use
     your own methods.
     '''
-    def __init__(self, type_, *args, **kwargs):
+    def __init__(self, type_):
         '''
         :param str type_:
             readers/writers This parameter is used only for local methods
             and it is part of import path.
         '''
-        self.args = args
-        self.kwargs = kwargs
         self.type = type_
 
     def run(self, args):
