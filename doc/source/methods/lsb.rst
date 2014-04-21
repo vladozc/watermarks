@@ -17,7 +17,7 @@ Example
 | .. image:: _static/sample.png   | .. image:: _static/sample_watermarked.png   |
 +---------------------------------+---------------------------------------------+
 
-Can you see the difference? No? So let's use Waterm`arks to extract last bit and
+Can you see the difference? No? So let's use Watermarks to extract last bit and
 generate image:
 
 +---------------------------------+---------------------------------------------+
