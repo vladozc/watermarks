@@ -27,7 +27,7 @@ class Watermark(object):
     def init(self):
         '''Initializes watermark - load, set width/height, ...'''
         if self.img.format not in ALLOWED_FORMATS:
-            logger.warning('Watermark is in not allowed format. (skip)')
+            logger.warning('Watermark format "%s" is not allowed. (skip)', self.img.format)
             raise ValueError()
         self.img.load()
         self.width, self.height = self.img.size
@@ -49,10 +49,12 @@ def create_watermark(wm, width=None, height=None, *args, **kwargs):
         wm = Image.open(wm)
 
     if width and height:
-        img_w, img_h = img.size
+        img_w, img_h = wm.size
         if img_w != width or img_h != height:
-            # TODO
-            pass
+            sized_img = Image.new(wm.mode, (width, height), 'white')
+            sized_img.paste(wm, (0, 0))
+            sized_img.format = wm.format
+            wm = sized_img
 
     wm_instance = Watermark(wm, *args, **kwargs)
     wm_instance.init()
