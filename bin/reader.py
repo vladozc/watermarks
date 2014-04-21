@@ -7,8 +7,8 @@ import logging
 import os
 import sys
 
-from watermarker.core import setup_logger
-from watermarker.core.loader import Loader
+from watermarks.core import setup_logger
+from watermarks.core.loader import Loader
 
 
 logger = logging.getLogger()

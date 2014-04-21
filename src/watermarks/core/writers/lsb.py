@@ -3,7 +3,7 @@ import os
 
 from PIL import Image
 
-from watermarker.core.watermark import create_watermark 
+from watermarks.core.watermark import create_watermark 
 
 ALLOWED_FORMATS = ('BMP', 'PNG', 'GIF', 'JPEG')
 logger = logging.getLogger()
@@ -36,7 +36,7 @@ class Lsb(object):
         :param str format:
             Output format.
 
-        :param watermarker.core.watermark wm:
+        :param watermarks.core.watermark wm:
             Watermark instance.
 
         :param str suffix:
