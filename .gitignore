@@ -4,4 +4,5 @@ e_python*
 doc/build/
 tmp/
 test/data/gen-*
-
+build/
+dist/
