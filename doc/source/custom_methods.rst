@@ -8,5 +8,5 @@ in ``$PYTHONPATH``.)
 
 Module with custom method must have function ``init(args)`` and method
 implementation class with function ``run()``. Please see some existing
-method (in ``watermarker.core.[readers|writers]``) for example.
+method (in ``watermarks.core.[readers|writers]``) for example.
 

@@ -14,9 +14,9 @@ import cProfile
 import logging
 import os
 
-from watermarker.core import setup_logger
-import watermarker.core.readers.lsb
-import watermarker.core.writers.lsb
+from watermarks.core import setup_logger
+import watermarks.core.readers.lsb
+import watermarks.core.writers.lsb
 
 
 logger = logging.getLogger()
@@ -47,7 +47,7 @@ def profile_writer_lsb():
 def run_reader_lsb():
     filepath = os.path.join(os.path.dirname(__file__), '..', 'test', 'data', 'shape1-rgb-l9.png')
     dest_dir = os.path.join(os.path.dirname(__file__), '..', 'tmp')
-    reader = watermarker.core.readers.lsb.Lsb([filepath], dest_dir, 'png')
+    reader = watermarks.core.readers.lsb.Lsb([filepath], dest_dir, 'png')
     reader.run()
 
 
@@ -55,7 +55,7 @@ def run_writer_lsb():
     filepath = os.path.join(os.path.dirname(__file__), '..', 'test', 'data', 'shape1-rgb-l9.png')
     wm_filepath = os.path.join(os.path.dirname(__file__), '..', 'test', 'data', 'shape1-rgb-l9.png')
     dest_dir = os.path.join(os.path.dirname(__file__), '..', 'tmp')
-    writer = watermarker.core.writers.lsb.Lsb([filepath], dest_dir, 'png', wm_filepath)
+    writer = watermarks.core.writers.lsb.Lsb([filepath], dest_dir, 'png', wm_filepath)
     writer.run()
 
 

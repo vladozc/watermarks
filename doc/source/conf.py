@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# WaterMarker documentation build configuration file, created by
+# Watermarks documentation build configuration file, created by
 # sphinx-quickstart on Tue Apr  8 16:49:39 2014.
 #
 # This file is execfile()d with the current directory set to its
@@ -45,7 +45,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'WaterMarker'
+project = u'Watermarks'
 copyright = u'2014, Vladimir Chovanec'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -178,7 +178,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'WaterMarkerdoc'
+htmlhelp_basename = 'Watermarksdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -198,7 +198,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'WaterMarker.tex', u'WaterMarker Documentation',
+  ('index', 'Watermarks.tex', u'Watermarks Documentation',
    u'Vladimir Chovanec', 'manual'),
 ]
 
@@ -228,7 +228,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'watermarker', u'WaterMarker Documentation',
+    ('index', 'watermarks', u'Watermarks Documentation',
      [u'Vladimir Chovanec'], 1)
 ]
 
@@ -242,8 +242,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'WaterMarker', u'WaterMarker Documentation',
-   u'Vladimir Chovanec', 'WaterMarker', 'One line description of project.',
+  ('index', 'Watermarks', u'Watermarks Documentation',
+   u'Vladimir Chovanec', 'Watermarks', 'One line description of project.',
    'Miscellaneous'),
 ]
 

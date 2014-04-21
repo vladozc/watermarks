@@ -4,7 +4,7 @@ import shutil
 from nose.tools import assert_equal
 from PIL import Image
 
-from watermarker.core.readers.lsb import Lsb
+from watermarks.core.readers.lsb import Lsb
 from . import WM1_1, WM1_255, WM1_255_JPG, DATA_DIR, DST_DIR, IM_PREFIX
 
 

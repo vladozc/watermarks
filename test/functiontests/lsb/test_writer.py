@@ -4,8 +4,8 @@ import shutil
 from nose.tools import assert_equal
 from PIL import Image
 
-from watermarker.core.watermark import create_watermark
-from watermarker.core.writers.lsb import Lsb
+from watermarks.core.watermark import create_watermark
+from watermarks.core.writers.lsb import Lsb
 from . import (
     WM1_WM, WM1_WM_JPG, WM2, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX,
     WM_BIG, WM_SMALL,

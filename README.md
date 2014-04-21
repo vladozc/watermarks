@@ -1,5 +1,5 @@
-WaterMarker
-===========
+Watermarks
+==========
 
 Library for adding/reading watermarks from images. For more information
 see documentation in doc folder.
