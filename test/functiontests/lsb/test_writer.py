@@ -6,7 +6,10 @@ from PIL import Image
 
 from watermarker.core.watermark import create_watermark
 from watermarker.core.writers.lsb import Lsb
-from . import WM1_WM, WM1_WM_JPG, WM2, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX
+from . import (
+    WM1_WM, WM1_WM_JPG, WM2, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX,
+    WM_BIG, WM_SMALL,
+)
 
 
 def run_and_assert(filename, wm_filename, wm_data, ext=None):
@@ -15,7 +18,9 @@ def run_and_assert(filename, wm_filename, wm_data, ext=None):
     filepath = os.path.join(DATA_DIR, filename)
     wm_filepath = os.path.join(DATA_DIR, wm_filename)
     suffix = '_watermarked_test'
-    wm = create_watermark(wm_filepath)
+    img = Image.open(filepath)
+    width, height = img.size
+    wm = create_watermark(wm_filepath, width=width, height=height)
     writer = Lsb([filepath], DST_DIR, ext.lstrip('.'), wm, suffix)
     results = writer.run()
     assert_equal(len(results), 1)
@@ -96,4 +101,11 @@ def test_wm_mode_rgb():
 
 def test_wm_mode_rgba():
     run_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-rgba.png' % WM_PREFIX, WM2)
+
+def test_big_wm():
+    run_and_assert('rgb-24-16b.png', 'gen-%s-wm-rgb.png' % WM_PREFIX, WM_BIG)
+
+
+def test_small_wm():
+    run_and_assert('gen-%s-wm-rgb.png' % WM_PREFIX, 'rgb-24-16b.png', WM_SMALL)
 
