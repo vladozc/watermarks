@@ -13,11 +13,8 @@ class BaseWriter(object):
 
     '''
 
-    def __init__(self, paths, destination, format, wm, suffix='_watermarked'):
+    def __init__(self, destination, format, wm, suffix='_watermarked'):
         '''
-        :param list paths:
-            Filepaths/folders to be processed.
-
         :param str destination:
             Destination where watermarked images will be stored.
 
@@ -31,21 +28,23 @@ class BaseWriter(object):
             Suffix added to generated files. If set to empty string,
             generated image will overwrite original image.
         '''
-        self.paths = paths
         self.destination = destination
         self.format = format
         self.wm = wm
         self.suffix = suffix
 
-    def run(self):
+    def run(self, paths):
         '''Runs the process.
+
+        :param list paths:
+            Filepaths/folders to be processed.
 
         :return:
             List of generated files.
         :rtype: list
         '''
         processed = []
-        for path in self.paths:
+        for path in paths:
             if not os.path.exists(path):
                 logger.error('Path "%s" does not exist! (skip)', path)
             elif os.path.isdir(path):

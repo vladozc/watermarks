@@ -12,8 +12,8 @@ def run_and_assert(filename, wm_data, ext=None):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
-    reader = Lsb([filepath], DST_DIR, ext.lstrip('.'))
-    results = list(reader.run())
+    reader = Lsb(DST_DIR, ext.lstrip('.'))
+    results = list(reader.run([filepath]))
     src_img = Image.open(filepath)
     assert_equal(len(results), len(src_img.getbands()))
     for res_filepath in results:

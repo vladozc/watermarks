@@ -21,8 +21,8 @@ def run_writer_and_assert(writer_class, filename, wm_filename, wm_data,
         img = Image.open(filepath)
         width, height = img.size
     wm = create_watermark(wm_filepath, width=width, height=height)
-    writer = writer_class([filepath], DST_DIR, ext.lstrip('.'), wm, suffix)
-    results = list(writer.run())
+    writer = writer_class(DST_DIR, ext.lstrip('.'), wm, suffix)
+    results = list(writer.run([filepath]))
     assert_equal(len(results), 1)
     res_filepath = results[0]
     res_img = Image.open(res_filepath)

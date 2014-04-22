@@ -22,7 +22,7 @@ class Loader(object):
         '''Runs desired watermark method with `args`.'''
         module = self._load_method(args.method)
         x = module.init(args)
-        return x.run()
+        return x.run(args.sources)
 
     def _load_method(self, method):
         local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type + '.' + method

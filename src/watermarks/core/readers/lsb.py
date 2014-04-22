@@ -12,13 +12,13 @@ def init(args):
     '''Returns initialized Lsb (reader) object from arguments passed from
     command line.
     '''
-    return Lsb(args.sources, args.dest_dir, args.format)
+    return Lsb(args.dest_dir, args.format)
 
 
 class Lsb(object):
     '''Class wraps the LSB functionality. It allows to extract watermark
     from more images at once. To do so, just pass list of images (folders)
-    to constructor (argument `paths`). If the path is folder, it is scanned
+    to run() (argument `paths`). If the path is folder, it is scanned
     for images inside (not recursive). `destination` is path where extracted
     watermarks will be stored and `format` is their format (e.g. png).
 
@@ -28,30 +28,29 @@ class Lsb(object):
     '''
     allowed_modes = ('CMYK', 'L', 'RGB')
 
-    def __init__(self, paths, destination, format):
+    def __init__(self, destination, format):
         '''
-        :param list paths:
-            Filepaths/folders to be processed.
-
         :param str destination:
             Destination where extracted watermarks will be stored.
 
         :param str format:
             Watermark format.
         '''
-        self.paths = paths
         self.destination = destination
         self.format = format
 
-    def run(self):
+    def run(self, paths):
         '''Runs the process.
+
+        :param list paths:
+            Filepaths/folders to be processed.
 
         :return:
             List of generated files.
         :rtype: list
         '''
         processed = []
-        for path in self.paths:
+        for path in paths:
             if not os.path.exists(path):
                 logger.error('Path "%s" does not exist! (skip)', path)
             elif os.path.isdir(path):
