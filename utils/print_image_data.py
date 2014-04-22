@@ -15,7 +15,8 @@ def print_image_data(filepath):
 def main():
     for filepath in sys.argv[1:]:
         print_image_data(filepath)
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    exit(main())

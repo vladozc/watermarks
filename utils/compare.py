@@ -11,8 +11,9 @@ def compare(filepath1, filepath2):
 
 def main():
     compare(sys.argv[1], sys.argv[2])
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    exit(main())
 

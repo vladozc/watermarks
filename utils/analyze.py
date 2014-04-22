@@ -8,6 +8,7 @@ def main():
     verbose = 1 if sys.argv[1] == '-v' else 0
     for i in range(1 + verbose, len(sys.argv)):
         analyze(sys.argv[i], verbose)
+    return 0
 
 
 def analyze(filepath, verbose):
@@ -23,5 +24,5 @@ def analyze(filepath, verbose):
 
 
 if __name__ == '__main__':
-    main()
+    exit(main())
 

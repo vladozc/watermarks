@@ -1,7 +1,4 @@
 import logging
-import os
-
-from PIL import Image
 
 from watermarks.core.watermark import create_watermark 
 from watermarks.core.writers import BaseWriter

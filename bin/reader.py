@@ -1,7 +1,4 @@
 #!/usr/bin/python
-'''
-PYTHONPATH=../src ./reader.py -d ../res -m lsb ../data/
-'''
 import argparse
 import logging
 import os
@@ -48,7 +45,7 @@ def setup_parser():
     )
     parser.add_argument(
         '--format', default='png',
-        help='Format for generated images.'
+        help='Format of generated images.'
     )
     return parser
 

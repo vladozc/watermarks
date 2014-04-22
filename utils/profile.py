@@ -26,6 +26,7 @@ def profile_all():
     setup_logger()
     profile_reader_lsb()
     profile_writer_lsb()
+    return 0
 
 
 def profile_reader_lsb():
@@ -60,5 +61,5 @@ def run_writer_lsb():
 
 
 if __name__ == '__main__':
-    profile_all()
+    exit(profile_all())
 

@@ -8,8 +8,8 @@ logger = logging.getLogger()
 
 
 class BaseWriter(object):
-    '''Base class for writers. It is responsible for ...
-    
+    '''Base class for writers. It is responsible for selecting files to
+    be processed, checking them and calling watermark method on them.    
 
     '''
 

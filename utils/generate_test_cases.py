@@ -7,6 +7,7 @@ from PIL import Image
 def main(dst_path, img_modes_prefix, wm_modes_prefix):
     generate_img_modes_types(dst_path, img_modes_prefix)
     generate_wm_modes(dst_path, wm_modes_prefix)
+    return 0
 
 
 def generate_img_modes_types(dst_path, prefix):
@@ -53,5 +54,5 @@ def generate_wm_modes(dst_path, prefix):
 
 
 if __name__ == '__main__':
-    main(*sys.argv[1:])
+    exit(main(*sys.argv[1:]))
 

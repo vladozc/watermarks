@@ -8,7 +8,7 @@ class Loader(object):
     '''Class responsible for loading and running watermark method.
     Method will first be searched in local modules and if it will not be
     found, Loader will try to find it in global scope (so you can use
-    your own methods.
+    your own methods).
     '''
     def __init__(self, type_=''):
         '''
@@ -31,6 +31,6 @@ class Loader(object):
             module = __import__(local_method, fromlist=('init',))
         except ImportError:
             logger.debug('Loading method from local modules failed, trying '
-                         'to load from global space.')
+                         'to load from global scope.')
             module = __import__(method, fromlist=('init',))
         return module

@@ -1,6 +1,6 @@
 import logging
-import six
 
+import six
 from PIL import Image
 
 
@@ -40,7 +40,7 @@ class Watermark(object):
         try:
             return 2 ** MODE_DEPTHS[self.img.mode] - 1
         except KeyError:
-            logger.critical('Watermark band "%s" is not supported!', 
+            logger.critical('Watermark mode "%s" is not supported!', 
                             self.img.mode)
             raise
 
