@@ -5,6 +5,12 @@ Library requires Python 2.6/2.7/3.x. It uses some third party libs. You can inst
 
   pip install -r requirements.txt
 
+You can test Watermarks by calling selftest() function::
+
+  >>> import watermarks
+  >>> watermarks.selftest()
+  True
+
 However, the ``pillow`` dependency might need some other libraries to work properly. If you meet error message like ``IOError: decoder zip not available``, please install following libs::
 
   CentOS:
