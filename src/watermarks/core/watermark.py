@@ -1,4 +1,5 @@
 import logging
+import six
 
 from PIL import Image
 
@@ -45,7 +46,7 @@ class Watermark(object):
 
 
 def create_watermark(wm, width=None, height=None, *args, **kwargs):
-    if isinstance(wm, basestring):
+    if isinstance(wm, six.string_types):
         wm = Image.open(wm)
 
     if width and height:
