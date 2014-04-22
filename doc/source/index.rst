@@ -10,6 +10,7 @@
 .. include:: running_tests.rst
 .. include:: methods/index.rst
 .. include:: custom_methods.rst
+.. include:: release_notes.rst
 
 
 Indices and tables
