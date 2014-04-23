@@ -5,21 +5,12 @@ from nose.tools import assert_equal
 from PIL import Image
 
 from watermarks.core.readers.lsb import Lsb
+from .. import run_reader_and_assert
 from . import WM1_1, WM1_255, WM1_255_JPG, DATA_DIR, DST_DIR, IM_PREFIX
 
 
-def run_and_assert(filename, wm_data, ext=None):
-    base, f_ext = os.path.splitext(filename)
-    ext = ext or f_ext
-    filepath = os.path.join(DATA_DIR, filename)
-    reader = Lsb(DST_DIR, ext.lstrip('.'))
-    results = list(reader.run([filepath]))
-    src_img = Image.open(filepath)
-    assert_equal(len(results), len(src_img.getbands()))
-    for res_filepath in results:
-        res_img = Image.open(res_filepath)
-        res_img.load()
-        assert_equal(list(res_img.getdata()), wm_data)
+def run_and_assert(*args, **kwargs):
+    run_reader_and_assert(Lsb, *args, **kwargs)
 
 
 def test_g_gif():
