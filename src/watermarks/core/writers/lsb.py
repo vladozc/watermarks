@@ -29,11 +29,17 @@ class Lsb(BaseWriter):
         src_img.load()
         bands = src_img.split()
         bands_wm = []
+        src_width, src_height = src_img.size
+        wm_width, wm_height = self.wm.img.size
+        if src_width == wm_width and src_height == wm_height:
+            wm = self.wm
+        else:
+            wm = create_watermark(self.wm.img, width=src_width, height=src_height)
         for band in bands:
             band_wm = Image.new('L', src_img.size)
-            band_wm.putdata([convert(orig_px, wm_px, self.wm.threshold) 
+            band_wm.putdata([convert(orig_px, wm_px, wm.threshold) 
                              for orig_px, wm_px 
-                             in zip(band.getdata(), self.wm.band.getdata())
+                             in zip(band.getdata(), wm.band.getdata())
                             ])
             bands_wm.append(band_wm)
         dst_img = Image.merge(src_img.mode, bands_wm)

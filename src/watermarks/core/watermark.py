@@ -20,7 +20,7 @@ logger = logging.getLogger()
 
 class Watermark(object):
     '''Basic class for image that will be put to other image as watermark.
-    As input, it works with raw image data.
+    As input, it works with image object.
     '''
     def __init__(self, img):
         self.img = img
