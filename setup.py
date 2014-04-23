@@ -5,14 +5,14 @@ import os
 import sys
 src_dir = os.path.join(os.path.dirname(__file__), 'src')
 sys.path.insert(0, src_dir)
-import watermarks
+#import watermarks
 
 
 setup(
     name='watermarks',
     package_dir={'': 'src'},
     packages=find_packages('src'),
-    version=watermarks.__version__,
+    version='0.1',
     description='Library for adding/reading watermarks from images.',
     author='Vladimir Chovanec',
     author_email='vladimir.chovanec.zc@gmail.com',
@@ -24,8 +24,12 @@ setup(
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: GPL",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Image Processing",
+        "Topic :: Multimedia :: Graphics",
         ],
+    install_requires=[
+        'Pillow==2.3.0',
+        'six==1.6.1',
+    ],
 )
