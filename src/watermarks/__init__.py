@@ -3,7 +3,7 @@ import os
 from PIL import Image
 
 
-__version__ = '0.1'
+__version__ = '0.1.1-devel'
 
 
 def selftest(tmp='/tmp'):
