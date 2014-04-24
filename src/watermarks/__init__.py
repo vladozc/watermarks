@@ -1,3 +1,9 @@
+'''Download locations:
+
+https://github.com/vladozc/watermarks
+https://pypi.python.org/pypi/watermarks
+
+'''
 import os
 
 from PIL import Image
