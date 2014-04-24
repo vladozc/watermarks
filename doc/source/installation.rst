@@ -1,6 +1,18 @@
 Installation
 ============
 
+pip
+---
+
+Just type command::
+
+  pip install watermarks
+
+From source code
+----------------
+
+Download/clone repository from `GitHub <https://github.com/vladozc/watermarks>`_.
+
 Library requires Python 2.6/2.7/3.x. It uses some third party libs. You can install them with command::
 
   pip install -r requirements.txt
