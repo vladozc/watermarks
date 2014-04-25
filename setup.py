@@ -1,12 +1,18 @@
 from distutils.core import setup
 from setuptools import find_packages
 
+import os
+import sys
+src_dir = os.path.join(os.path.dirname(__file__), 'src')
+sys.path.insert(0, src_dir)
+import watermarks
+
 
 setup(
     name='watermarks',
     package_dir={'': 'src'},
     packages=find_packages('src'),
-    version='0.1',
+    version=watermarks.__version__,
     description='Library for adding/reading watermarks from images. Currently visible and LSB watermark methods are supported.',
     author='Vladimir Chovanec',
     author_email='vladimir.chovanec.zc@gmail.com',
