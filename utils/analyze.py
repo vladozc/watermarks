@@ -19,8 +19,8 @@ def analyze(filepath, verbose):
     print 'Bands:\t', img.getbands()
     if verbose:
         img.load()
-        for i, band in enumerate(img.split()):
-            print 'Band %d:\t' % i, list(band.getdata())
+        for band_name, band in zip(img.getbands(), img.split()):
+            print 'Band %s:\t' % band_name, list(band.getdata())
 
 
 if __name__ == '__main__':
