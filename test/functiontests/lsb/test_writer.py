@@ -2,11 +2,8 @@ import os
 import shutil
 
 from watermarks.core.writers.lsb import Lsb
-from .. import run_writer_and_assert, DATA_DIR
-from . import (
-    WM1_WM, WM1_WM_JPG, WM2, IM_PREFIX, WM_PREFIX,
-    WM_BIG, WM_SMALL,
-)
+from .. import run_writer_and_assert, DATA_DIR, IM_PREFIX, WM_PREFIX
+from . import WM1_WM, WM1_WM_JPG, WM2, WM_BIG, WM_SMALL
 
 
 def run_lsb_and_assert(*args, **kwargs):
@@ -83,6 +80,7 @@ def test_wm_mode_rgb():
 
 def test_wm_mode_rgba():
     run_lsb_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-rgba.png' % WM_PREFIX, WM2)
+
 
 def test_big_wm():
     run_lsb_and_assert('rgb-24-16b.png', 'gen-%s-wm-rgb.png' % WM_PREFIX, WM_BIG)

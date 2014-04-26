@@ -5,8 +5,8 @@ from nose.tools import assert_equal
 from PIL import Image
 
 from watermarks.core.readers.lsb import Lsb
-from .. import run_reader_and_assert
-from . import WM1_1, WM1_255, WM1_255_JPG, DATA_DIR, DST_DIR, IM_PREFIX
+from .. import run_reader_and_assert, IM_PREFIX, DATA_DIR, DST_DIR
+from . import WM1_1, WM1_255, WM1_255_JPG
 
 
 def run_and_assert(*args, **kwargs):

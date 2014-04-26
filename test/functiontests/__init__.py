@@ -1,13 +1,34 @@
 import os
+import shutil
 
 from nose.tools import assert_equal
 from PIL import Image
 
+import generate_test_cases
 from watermarks.core.watermark import create_watermark
 
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 DST_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'tmp')
+
+IM_PREFIX = 'imode'
+WM_PREFIX = 'wmode'
+
+
+def setup_module():
+    clean()
+    if not os.path.exists(DST_DIR):
+        os.mkdir(DST_DIR)
+    generate_test_cases.main(DATA_DIR, IM_PREFIX, WM_PREFIX)
+
+
+def teardown_module():
+    clean()
+
+
+def clean():
+    if os.path.isdir(DST_DIR):
+        shutil.rmtree(DST_DIR)
 
 
 def run_reader_and_assert(reader_class, filename, wm_data=None, ext=None):
