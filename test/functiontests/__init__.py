@@ -8,8 +8,9 @@ import generate_test_cases
 from watermarks.core.watermark import create_watermark
 
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
-DST_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'tmp')
+ROOT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))
+DATA_DIR = os.path.join(ROOT_DIR, 'test', 'data')
+DST_DIR = os.path.join(ROOT_DIR, 'tmp')
 
 IM_PREFIX = 'imode'
 WM_PREFIX = 'wmode'
