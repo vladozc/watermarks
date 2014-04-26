@@ -55,7 +55,7 @@ class BaseReader(object):
         src_img = Image.open(filepath)
         if src_img.format not in self.allowed_formats:
             logger.warning('File "%s" is in not allowed format. (skip)', filepath)
-            return
+            return []
 
         if src_img.mode in self.allowed_modes:
             generated_filepaths = []
@@ -70,6 +70,7 @@ class BaseReader(object):
             return generated_filepaths
         else:
             logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
+            return []
 
     def _create_watermarked(self, src_img):
         raise NotImplementedError()
