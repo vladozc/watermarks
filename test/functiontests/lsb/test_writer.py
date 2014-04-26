@@ -91,3 +91,10 @@ def test_big_wm():
 def test_small_wm():
     run_lsb_and_assert('gen-%s-wm-rgb.png' % WM_PREFIX, 'rgb-24-16b.png', WM_SMALL)
 
+
+def test_unsupported_format():
+    run_lsb_and_assert('unsupported_format.tiff', 'rgb-24-16b.png')
+
+
+def test_unsupported_mode():
+    run_lsb_and_assert('unsupported_mode.png', 'rgb-24-16b.png')

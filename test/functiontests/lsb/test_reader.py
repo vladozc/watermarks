@@ -67,3 +67,11 @@ def test_unknown_extension():
         os.path.join(DATA_DIR, 'gen-%s-rgb.unknownextension' % IM_PREFIX),
     )
     run_and_assert('gen-%s-rgb.unknownextension' % IM_PREFIX, WM1_255, ext='.png')
+
+
+def test_unsupported_format():
+    run_and_assert('unsupported_format.tiff')
+
+
+def test_unsupported_mode():
+    run_and_assert('unsupported_mode.png')

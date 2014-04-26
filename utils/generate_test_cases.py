@@ -7,6 +7,7 @@ from PIL import Image
 def main(dst_path, img_modes_prefix, wm_modes_prefix):
     generate_img_modes_types(dst_path, img_modes_prefix)
     generate_wm_modes(dst_path, wm_modes_prefix)
+    generate_unsupported(dst_path)
     return 0
 
 
@@ -51,6 +52,16 @@ def generate_wm_modes(dst_path, prefix):
     band_img.putdata([255]*64 + [0]*64 + [255]*64 + [0]*64)
     img = Image.merge('L', [band_img])
     img.save(os.path.join(dst_path, 'gen-%s-img.png' % prefix))
+
+
+def generate_unsupported(dst_path):
+    img_mode = Image.new('1', (1, 1))
+    img_mode.putdata([0])
+    img_mode.save(os.path.join(dst_path, 'unsupported_mode.png'))
+
+    img_format = Image.new('1', (1, 1))
+    img_format.putdata([0])
+    img_format.save(os.path.join(dst_path, 'unsupported_format.tiff'))
 
 
 if __name__ == '__main__':
