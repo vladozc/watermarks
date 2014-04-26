@@ -75,3 +75,7 @@ def test_unsupported_format():
 
 def test_unsupported_mode():
     run_and_assert('unsupported_mode.png')
+
+
+def test_not_exists():
+    run_and_assert('this_file_does_not_exist.png')

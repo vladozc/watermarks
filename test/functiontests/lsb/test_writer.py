@@ -98,3 +98,7 @@ def test_unsupported_format():
 
 def test_unsupported_mode():
     run_lsb_and_assert('unsupported_mode.png', 'rgb-24-16b.png')
+
+
+def test_not_exists():
+    run_lsb_and_assert('this_file_does_not_exist.png', 'rgb-24-16b.png', width=1, height=1)
