@@ -1,11 +1,15 @@
 import os
 import shutil
+import subprocess
 
-from nose.tools import assert_equal
+from nose.tools import assert_equal, assert_true
 from PIL import Image
 
 from watermarks.core.readers.lsb import Lsb
-from .. import run_reader_and_assert, IM_PREFIX, DATA_DIR, DST_DIR
+from .. import (
+    run_reader_and_assert, IM_PREFIX, ROOT_DIR, DATA_DIR, DST_DIR,
+    create_data_dir,
+)
 from . import WM1_1, WM1_255, WM1_255_JPG
 
 
@@ -79,3 +83,37 @@ def test_unsupported_mode():
 
 def test_not_exists():
     run_and_assert('this_file_does_not_exist.png')
+
+
+def test_dir():
+    filenames = ['gen-%s-rgb.png' % IM_PREFIX, 'gen-%s-g.png' % IM_PREFIX]
+    data_dir_path = create_data_dir('reader_dir', filenames)
+    filepath = os.path.join(DATA_DIR, 'shape1-g-l0.png')
+
+    lsb = Lsb(DST_DIR, 'png')
+    generated_filepaths = lsb.run([data_dir_path, filepath])
+    generated_filenames = set([os.path.basename(f) for f in generated_filepaths])
+
+    assert_true('gen-%s-rgb_R.png' % IM_PREFIX in generated_filenames)
+    assert_true('gen-%s-rgb_G.png' % IM_PREFIX in generated_filenames)
+    assert_true('gen-%s-rgb_B.png' % IM_PREFIX in generated_filenames)
+    assert_true('gen-%s-g_L.png' % IM_PREFIX in generated_filenames)
+    assert_true('shape1-g-l0_L.png' in generated_filenames)
+    assert_equal(len(generated_filenames), 5)
+
+
+def test_bin():
+    prog = os.path.join(ROOT_DIR, 'bin', 'reader.py')
+    filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
+    generated_filepath = os.path.join(DST_DIR, 'gen-%s-g_L.png' % IM_PREFIX)
+    if os.path.exists(generated_filepath):
+        os.unlink(generated_filepath)
+
+    sp = subprocess.Popen(
+        ['python', prog, '-m', 'lsb', '-d', DST_DIR, filepath],
+        stderr=subprocess.PIPE,
+    )
+    sp.communicate()
+
+    assert_equal(sp.returncode, 0)
+    assert_true(os.path.isfile(generated_filepath))

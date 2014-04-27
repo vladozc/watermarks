@@ -15,7 +15,9 @@ function install_environment()
 function run_tests()
 {
     local e=e_$1
-    PYTHONPATH=src:utils $e/bin/nosetests test/functiontests/
+    source $e/bin/activate
+    PYTHONPATH=src:utils nosetests test/functiontests/
+    deactivate
 }
 
 clean=0

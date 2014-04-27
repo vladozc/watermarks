@@ -32,6 +32,17 @@ def clean():
         shutil.rmtree(DST_DIR)
 
 
+def create_data_dir(dirname, filenames):
+    dir_path = os.path.join(DST_DIR, dirname)
+    os.makedirs(dir_path)
+    for filename in filenames:
+        shutil.copyfile(
+            os.path.join(DATA_DIR, filename),
+            os.path.join(dir_path, filename),
+        )
+    return dir_path
+
+
 def run_reader_and_assert(reader_class, filename, wm_data=None, ext=None):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
