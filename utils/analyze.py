@@ -13,14 +13,14 @@ def main():
 
 def analyze(filepath, verbose):
     img = Image.open(filepath)
-    print 'Name:\t', os.path.basename(filepath)
-    print 'Mode:\t', img.mode
-    print 'Size:\t', img.size
-    print 'Bands:\t', img.getbands()
+    print ('Name:\t{0}'.format(os.path.basename(filepath)))
+    print ('Mode:\t{0}'.format(img.mode))
+    print ('Size:\t{0}'.format(img.size))
+    print ('Bands:\t{0}'.format(img.getbands()))
     if verbose:
         img.load()
         for band_name, band in zip(img.getbands(), img.split()):
-            print 'Band %s:\t' % band_name, list(band.getdata())
+            print ('Band {0}:\t{1}'.format(band_name, list(band.getdata())))
 
 
 if __name__ == '__main__':

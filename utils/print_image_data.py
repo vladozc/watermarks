@@ -9,7 +9,7 @@ def print_image_data(filepath):
     img.load()
     bands = img.split()
     for band in bands:
-        print list(band.getdata())
+        print(list(band.getdata()))
 
 
 def main():

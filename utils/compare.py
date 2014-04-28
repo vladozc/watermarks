@@ -6,7 +6,7 @@ def compare(filepath1, filepath2):
         data1 = fr.read()
     with open(filepath2, 'rb') as fr:
         data2 = fr.read()
-    print data1 == data2
+    print(data1 == data2)
 
 
 def main():
