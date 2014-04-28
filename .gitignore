@@ -6,3 +6,5 @@ tmp/
 test/data/gen-*
 build/
 dist/
+\.tox/
+ep*
