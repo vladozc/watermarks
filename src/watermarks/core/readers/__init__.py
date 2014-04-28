@@ -1,3 +1,4 @@
+import abc
 import logging
 import os
 
@@ -8,6 +9,7 @@ logger = logging.getLogger()
 
 
 class BaseReader(object):
+    __metaclass__ = abc.ABCMeta
 
     def __init__(self, destination, format):
         '''
@@ -72,5 +74,14 @@ class BaseReader(object):
             logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
             return []
 
+    @abc.abstractproperty
     def _create_watermarked(self, src_img):
-        raise NotImplementedError()
+        '''Method responsible for reading wm from single image.'''
+
+    @abc.abstractproperty
+    def allowed_formats(self):
+        '''List of allowed image formats for particular method.'''
+
+    @abc.abstractproperty
+    def allowed_modes(self):
+        '''List of allowed image modes for particular method.'''
