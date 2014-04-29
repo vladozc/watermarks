@@ -7,7 +7,7 @@ from nose.tools import assert_equal, assert_true
 from watermarks.core.watermark import create_watermark
 from watermarks.core.writers.lsb import Lsb
 from .. import (
-    run_writer_and_assert, ROOT_DIR, DATA_DIR, DST_DIR, IM_PREFIX, WM_PREFIX,
+    run_writer_and_assert, ROOT_DIR, DATA_DIR, in_tmp, IM_PREFIX, WM_PREFIX,
     create_data_dir,
 )
 from . import WM1_WM, WM1_WM_JPG, WM2, WM_BIG, WM_SMALL
@@ -109,32 +109,34 @@ def test_not_exists():
     run_lsb_and_assert('this_file_does_not_exist.png', 'rgb-24-16b.png', width=1, height=1)
 
 
-def test_dir():
+@in_tmp
+def test_dir(dst_dir):
     filenames = ['gen-%s-rgb.png' % IM_PREFIX, 'gen-%s-g.png' % IM_PREFIX]
-    data_dir_path = create_data_dir('writer_dir', filenames)
+    data_dir_path = create_data_dir(os.path.join(dst_dir, 'writer_dir'), filenames)
     filepath = os.path.join(DATA_DIR, 'shape1-g-l0.png')
     suffix = '_watermarked_test'
 
     wm = create_watermark(os.path.join(DATA_DIR, 'shape1-g-l0.png'))
-    lsb = Lsb(DST_DIR, 'png', wm, suffix)
+    lsb = Lsb(dst_dir, 'png', wm, suffix)
     generated_filepaths = lsb.run([data_dir_path, filepath])
     generated_filenames = set([os.path.basename(f) for f in generated_filepaths])
-    
+
     assert_true('gen-%s-rgb%s.png' % (IM_PREFIX, suffix) in generated_filenames)
     assert_true('gen-%s-g%s.png' % (IM_PREFIX, suffix) in generated_filenames)
     assert_true('shape1-g-l0%s.png' % suffix in generated_filenames)
     assert_equal(len(generated_filenames), 3)
 
 
-def test_bin():
+@in_tmp
+def test_bin(dst_dir):
     prog = os.path.join(ROOT_DIR, 'bin', 'writer.py')
     filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
-    generated_filepath = os.path.join(DST_DIR, 'gen-%s-g_watermarked.png' % IM_PREFIX)
+    generated_filepath = os.path.join(dst_dir, 'gen-%s-g_watermarked.png' % IM_PREFIX)
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
     sp = subprocess.Popen(
-        ['python', prog, '-m', 'lsb', '-d', DST_DIR, '-w', filepath, filepath],
+        ['python', prog, '-m', 'lsb', '-d', dst_dir, '-w', filepath, filepath],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     )
     stdout, stderr = sp.communicate()

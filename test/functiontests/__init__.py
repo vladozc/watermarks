@@ -1,7 +1,8 @@
 import os
 import shutil
+import tempfile
 
-from nose.tools import assert_equal
+from nose.tools import assert_equal, make_decorator
 from PIL import Image
 
 import generate_test_cases
@@ -10,7 +11,6 @@ from watermarks.core.watermark import create_watermark
 
 ROOT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))
 DATA_DIR = os.path.join(ROOT_DIR, 'test', 'data')
-DST_DIR = os.path.join(ROOT_DIR, 'tmp')
 
 IM_PREFIX = 'imode'
 WM_PREFIX = 'wmode'
@@ -18,8 +18,6 @@ WM_PREFIX = 'wmode'
 
 def setup_module():
     clean()
-    if not os.path.exists(DST_DIR):
-        os.mkdir(DST_DIR)
     generate_test_cases.main(DATA_DIR, IM_PREFIX, WM_PREFIX)
 
 
@@ -28,12 +26,24 @@ def teardown_module():
 
 
 def clean():
-    if os.path.isdir(DST_DIR):
-        shutil.rmtree(DST_DIR)
+    pass
 
 
-def create_data_dir(dirname, filenames):
-    dir_path = os.path.join(DST_DIR, dirname)
+def in_tmp(func):
+    def wrapper(*args, **kwargs):
+        tmp_path = tempfile.mkdtemp()
+        try:
+            rv = func(tmp_path, *args, **kwargs)
+            shutil.rmtree(tmp_path)
+            return rv
+        except Exception:
+            shutil.rmtree(tmp_path)
+            raise
+    wrapper = make_decorator(func)(wrapper)
+    return wrapper
+
+
+def create_data_dir(dir_path, filenames):
     os.makedirs(dir_path)
     for filename in filenames:
         shutil.copyfile(
@@ -43,11 +53,12 @@ def create_data_dir(dirname, filenames):
     return dir_path
 
 
-def run_reader_and_assert(reader_class, filename, wm_data=None, ext=None):
+@in_tmp
+def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=None):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
-    reader = reader_class(DST_DIR, ext.lstrip('.'))
+    reader = reader_class(dst_dir, ext.lstrip('.'))
     results = list(reader.run([filepath]))
     if wm_data is None:
         assert_equal(len(results), 0)
@@ -60,8 +71,9 @@ def run_reader_and_assert(reader_class, filename, wm_data=None, ext=None):
         assert_equal(list(res_img.getdata()), wm_data)
 
 
-def run_writer_and_assert(writer_class, filename, wm_filename, wm_data=None,
-                          ext=None, width=None, height=None):
+@in_tmp
+def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
+                          wm_data=None, ext=None, width=None, height=None):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
@@ -71,7 +83,7 @@ def run_writer_and_assert(writer_class, filename, wm_filename, wm_data=None,
         img = Image.open(filepath)
         width, height = img.size
     wm = create_watermark(wm_filepath, width=width, height=height)
-    writer = writer_class(DST_DIR, ext.lstrip('.'), wm, suffix)
+    writer = writer_class(dst_dir, ext.lstrip('.'), wm, suffix)
     results = list(writer.run([filepath]))
     if wm_data is None:
         assert_equal(len(results), 0)
