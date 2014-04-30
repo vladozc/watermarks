@@ -1,6 +1,15 @@
 Release notes
 =============
 
+0.1.1 (01.05.2014)
+------------------
+
+- fix crash when processing unsupported file format/mode
+- improved installation process
+- improved Python3 support
+- various small fixes
+
+
 0.1 (23.04.2014)
 ----------------
 
