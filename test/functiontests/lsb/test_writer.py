@@ -65,14 +65,6 @@ def test_gen_rgb_png():
     run_lsb_and_assert('gen-%s-rgb.png' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
 
 
-def test_unknown_extension():
-    shutil.copyfile(
-        os.path.join(DATA_DIR, 'gen-%s-rgb.png' % IM_PREFIX),
-        os.path.join(DATA_DIR, 'gen-%s-rgb.unknownextension' % IM_PREFIX),
-    )
-    run_lsb_and_assert('gen-%s-rgb.unknownextension' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM, ext='.png')
-
-
 def test_wm_mode_1():
     run_lsb_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-1.png' % WM_PREFIX, WM2)
 

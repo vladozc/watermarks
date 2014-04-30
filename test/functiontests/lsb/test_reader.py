@@ -1,5 +1,4 @@
 import os
-import shutil
 import subprocess
 
 from nose.tools import assert_equal, assert_true
@@ -63,14 +62,6 @@ def test_gen_rgb_jpg():
 
 def test_gen_rgb_png():
     run_and_assert('gen-%s-rgb.png' % IM_PREFIX, WM1_255)
-
-
-def test_unknown_extension():
-    shutil.copyfile(
-        os.path.join(DATA_DIR, 'gen-%s-rgb.png' % IM_PREFIX),
-        os.path.join(DATA_DIR, 'gen-%s-rgb.unknownextension' % IM_PREFIX),
-    )
-    run_and_assert('gen-%s-rgb.unknownextension' % IM_PREFIX, WM1_255, ext='.png')
 
 
 def test_unsupported_format():
