@@ -14,7 +14,13 @@ logger = logging.getLogger()
 def run():
     parser = setup_parser()
     args = parser.parse_args()
-    setup_logger()
+    if args.verbose:
+        ll = logging.DEBUG
+    elif args.quiet:
+        ll = logging.ERROR
+    else:
+        ll = None
+    setup_logger(ll)
     logger.debug(args)
     r = Loader('writers')
     try:
@@ -34,6 +40,12 @@ def setup_parser():
         'sources', metavar='PTH', nargs='+',
         help='List of files/directories that will be processed. Directories '
              'will be listed (but not recursive).'
+    )
+    parser.add_argument(
+        '-q', '--quiet', action='store_true', help='Be quiet.'
+    )
+    parser.add_argument(
+        '-v', '--verbose', action='store_true', help='Be verbose.'
     )
     parser.add_argument(
         '-m', '--method', required=True,

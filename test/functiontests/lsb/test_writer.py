@@ -136,8 +136,7 @@ def test_bin(dst_dir):
         os.unlink(generated_filepath)
 
     sp = subprocess.Popen(
-        ['python', prog, '-m', 'lsb', '-d', dst_dir, '-w', filepath, filepath],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        ['python', prog, '-m', 'lsb', '-q', '-d', dst_dir, '-w', filepath, filepath],
     )
     stdout, stderr = sp.communicate()
 
