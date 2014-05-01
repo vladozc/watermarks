@@ -5,8 +5,8 @@ import tempfile
 from nose.tools import assert_equal, make_decorator
 from PIL import Image
 
-import generate_test_cases
 from watermarks.core.watermark import create_watermark
+from . import generate_test_cases
 
 
 ROOT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))

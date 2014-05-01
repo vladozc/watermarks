@@ -3,9 +3,9 @@ Running tests
 
 \.. is as easy as::
 
-  $ PYTHONPATH=utils tox
+  $ tox
 
 or::
 
-  $ PYTHONPATH=src:utils nosetests --with-coverage --cover-erase --cover-package=watermarks.core test/functiontests/
+  $ PYTHONPATH=src nosetests --with-coverage --cover-erase --cover-package=watermarks.core test/functiontests/
 
