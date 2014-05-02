@@ -63,6 +63,10 @@ def setup_parser():
         '--format', default='png',
         help='Format of generated images.'
     )
+    parser.add_argument(
+        '-s', '--suffix', default='_watermarked',
+        help='Suffix of watermarked files (default: %(default)s).'
+    )
     return parser
 
 

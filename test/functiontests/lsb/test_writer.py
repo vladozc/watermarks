@@ -123,12 +123,13 @@ def test_dir(dst_dir):
 def test_bin(dst_dir):
     prog = os.path.join(ROOT_DIR, 'bin', 'writer.py')
     filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
-    generated_filepath = os.path.join(dst_dir, 'gen-%s-g_watermarked.png' % IM_PREFIX)
+    generated_filepath = os.path.join(dst_dir, 'gen-%s-g_watermarked_test.png' % IM_PREFIX)
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
     sp = subprocess.Popen(
-        ['python', prog, '-m', 'lsb', '-q', '-d', dst_dir, '-w', filepath, filepath],
+        ['python', prog, '-m', 'lsb', '-q', '-d', dst_dir, '-s',
+         '_watermarked_test', '-w', filepath, filepath],
     )
     stdout, stderr = sp.communicate()
 

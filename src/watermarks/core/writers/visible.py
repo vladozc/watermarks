@@ -11,7 +11,7 @@ def init(args):
     command line.
     '''
     wm = create_watermark(args.watermark)
-    return Visible(args.dest_dir, args.format, wm)
+    return Visible(args.dest_dir, args.format, wm, args.suffix)
 
 
 class Visible(BaseWriter):
