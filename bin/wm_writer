@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import argparse
 import logging
 import os
@@ -22,7 +22,7 @@ def run():
         ll = None
     setup_logger(ll)
     logger.debug(args)
-    r = Loader('readers')
+    r = Loader('writers')
     try:
         r.run(args)
         return 0
@@ -34,7 +34,7 @@ def run():
 
 
 def setup_parser():
-    description = 'Utility for reading watermarks from images.'
+    description = 'Utility for writing watermarks to images.'
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
         'sources', metavar='PTH', nargs='+',
@@ -52,12 +52,20 @@ def setup_parser():
         help='Watermark method to be applied.'
     )
     parser.add_argument(
+        '-w', '--watermark', required=True,
+        help='Watermark image.'
+    )
+    parser.add_argument(
         '-d', '--dest-dir', required=True,
-        help='Directory where the extracted watermarks will be stored.'
+        help='Directory where processed files with watermarks will be stored.'
     )
     parser.add_argument(
         '--format', default='png',
         help='Format of generated images.'
+    )
+    parser.add_argument(
+        '-s', '--suffix', default='_watermarked',
+        help='Suffix of watermarked files (default: %(default)s).'
     )
     return parser
 

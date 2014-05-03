@@ -7,7 +7,7 @@ from nose.tools import assert_equal, assert_true
 from watermarks.core.watermark import create_watermark
 from watermarks.core.writers.lsb import Lsb
 from .. import (
-    run_writer_and_assert, ROOT_DIR, DATA_DIR, in_tmp, IM_PREFIX, WM_PREFIX,
+    run_writer_and_assert, DATA_DIR, in_tmp, IM_PREFIX, WM_PREFIX,
     create_data_dir,
 )
 from . import WM1_WM, WM1_WM_JPG, WM2, WM_BIG, WM_SMALL
@@ -121,14 +121,13 @@ def test_dir(dst_dir):
 
 @in_tmp
 def test_bin(dst_dir):
-    prog = os.path.join(ROOT_DIR, 'bin', 'writer.py')
     filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
     generated_filepath = os.path.join(dst_dir, 'gen-%s-g_watermarked_test.png' % IM_PREFIX)
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
     sp = subprocess.Popen(
-        ['python', prog, '-m', 'lsb', '-q', '-d', dst_dir, '-s',
+        ['wm_writer', '-m', 'lsb', '-q', '-d', dst_dir, '-s',
          '_watermarked_test', '-w', filepath, filepath],
     )
     stdout, stderr = sp.communicate()
