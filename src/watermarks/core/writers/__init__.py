@@ -17,12 +17,12 @@ class BaseWriter(BaseMethod):
     '''
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, destination, format, wm, suffix='_watermarked'):
+    def __init__(self, destination, format_, wm, suffix='_watermarked'):
         '''
         :param str destination:
             Destination where watermarked images will be stored.
 
-        :param str format:
+        :param str format_:
             Output format.
 
         :param watermarks.core.watermark wm:
@@ -33,7 +33,7 @@ class BaseWriter(BaseMethod):
             generated image will overwrite original image.
         '''
         self.destination = destination
-        self.format = format
+        self.format = format_
         self.wm = wm
         self.suffix = suffix
 

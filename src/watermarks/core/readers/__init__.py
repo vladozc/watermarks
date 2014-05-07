@@ -13,16 +13,16 @@ logger = logging.getLogger()
 class BaseReader(BaseMethod):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, destination, format):
+    def __init__(self, destination, format_):
         '''
         :param str destination:
             Destination where extracted watermarks will be stored.
 
-        :param str format:
+        :param str format_:
             Watermark format.
         '''
         self.destination = destination
-        self.format = format
+        self.format = format_
 
     def _generate_files(self, filepath, src_img):
         generated_filepaths = []

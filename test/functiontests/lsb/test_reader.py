@@ -6,7 +6,7 @@ from PIL import Image
 
 from watermarks.core.readers.lsb import Lsb
 from .. import (
-    run_reader_and_assert, IM_PREFIX, ROOT_DIR, DATA_DIR, in_tmp,
+    run_reader_and_assert, IM_PREFIX, DATA_DIR, in_tmp,
     create_data_dir,
 )
 from . import WM1_1, WM1_255, WM1_255_JPG
@@ -96,14 +96,13 @@ def test_dir(dst_dir):
 
 @in_tmp
 def test_bin(dst_dir):
-    prog = os.path.join(ROOT_DIR, 'bin', 'reader.py')
     filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
     generated_filepath = os.path.join(dst_dir, 'gen-%s-g_L.png' % IM_PREFIX)
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
     sp = subprocess.Popen(
-        ['python', prog, '-m', 'lsb', '-q', '-d', dst_dir, filepath],
+        ['wm_reader', '-m', 'lsb', '-q', '-d', dst_dir, filepath],
     )
     sp.communicate()
 
