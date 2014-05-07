@@ -37,20 +37,11 @@ class BaseWriter(BaseMethod):
         self.wm = wm
         self.suffix = suffix
 
-    def _process_file(self, filepath):
-        src_img = Image.open(filepath)
-        if src_img.format not in self.allowed_formats:
-            logger.warning('File "%s" is in not allowed format. (skip)', filepath)
-            return []
-
-        if src_img.mode in self.allowed_modes:
-            base_name, _ = os.path.splitext(os.path.basename(filepath))
-            logger.info('Processing file "%s"', filepath)
-            dst_filepath = os.path.join(self.destination, '%s%s.%s' % (base_name, self.suffix, self.format))
-            dst_img = self._create_watermarked(src_img)
-            dst_img.save(dst_filepath)
-            logger.info('Generated file "%s".', dst_filepath)
-            return [dst_filepath]
-        else:
-            logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
-            return []
+    def _generate_files(self, filepath, src_img):
+        base_name, _ = os.path.splitext(os.path.basename(filepath))
+        logger.info('Processing file "%s"', filepath)
+        dst_filepath = os.path.join(self.destination, '%s%s.%s' % (base_name, self.suffix, self.format))
+        dst_img = self._create_watermarked(src_img)
+        dst_img.save(dst_filepath)
+        logger.info('Generated file "%s".', dst_filepath)
+        return [dst_filepath]

@@ -41,6 +41,18 @@ class BaseMethod(object):
                 processed.extend(res)
         return processed
 
+    def _process_file(self, filepath):
+        src_img = Image.open(filepath)
+        if src_img.format not in self.allowed_formats:
+            logger.warning('File "%s" is in not allowed format. (skip)', filepath)
+            return []
+
+        if src_img.mode in self.allowed_modes:
+            return self._generate_files(filepath, src_img)
+        else:
+            logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
+            return []
+
     @abc.abstractproperty
     def _create_watermarked(self, src_img):
         '''Method responsible for reading wm from single image.'''
