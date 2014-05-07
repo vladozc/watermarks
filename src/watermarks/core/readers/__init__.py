@@ -4,11 +4,13 @@ import os
 
 from PIL import Image
 
+from watermarks.core.method import BaseMethod
+
 
 logger = logging.getLogger()
 
 
-class BaseReader(object):
+class BaseReader(BaseMethod):
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, destination, format):
@@ -21,37 +23,6 @@ class BaseReader(object):
         '''
         self.destination = destination
         self.format = format
-
-    def run(self, paths):
-        '''Runs the process.
-
-        :param list paths:
-            Filepaths/folders to be processed.
-
-        :return:
-            List of generated files.
-        :rtype: list
-        '''
-        processed = []
-        for path in paths:
-            if not os.path.exists(path):
-                logger.error('Path "%s" does not exist! (skip)', path)
-            elif os.path.isdir(path):
-                processed.extend(self._process_dir(path))
-            elif os.path.isfile(path):
-                processed.extend(self._process_file(path))
-            else:
-                raise NotImplementedError('Cannot determine type of %s', path)
-        return filter(None, processed)
-
-    def _process_dir(self, dirpath):
-        processed = []
-        for filename in os.listdir(dirpath):
-            full_filepath = os.path.join(dirpath, filename)
-            if os.path.isfile(full_filepath):
-                res = self._process_file(full_filepath)
-                processed.extend(res)
-        return processed
 
     def _process_file(self, filepath):
         src_img = Image.open(filepath)
@@ -73,15 +44,3 @@ class BaseReader(object):
         else:
             logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
             return []
-
-    @abc.abstractproperty
-    def _create_watermarked(self, src_img):
-        '''Method responsible for reading wm from single image.'''
-
-    @abc.abstractproperty
-    def allowed_formats(self):
-        '''List of allowed image formats for particular method.'''
-
-    @abc.abstractproperty
-    def allowed_modes(self):
-        '''List of allowed image modes for particular method.'''
