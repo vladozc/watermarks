@@ -1,4 +1,5 @@
 import logging
+import math
 
 from watermarks.core.watermark import create_watermark 
 from watermarks.core.writers import BaseWriter
@@ -24,5 +25,28 @@ class Visible(BaseWriter):
 
     def _create_watermarked(self, src_img):
         dst_img = src_img.copy()
-        dst_img.paste(self.wm.img, (0, 0))
+        dst_w, dst_h = dst_img.size
+        wm_w, wm_h = self.wm.img.size
+        right = dst_w - wm_w
+        bottom = dst_h - wm_h
+        center_w = math.floor(right / 2)
+        center_h = math.floor(bottom / 2)
+        if self.position == 'TL':
+            dst_img.paste(self.wm.img, (0, 0))
+        elif self.position == 'T':
+            dst_img.paste(self.wm.img, (center_w, 0))
+        elif self.position == 'TR':
+            dst_img.paste(self.wm.img, (right, 0))
+        elif self.position == 'L':
+            dst_img.paste(self.wm.img, (0, center_h))
+        elif self.position == 'R':
+            dst_img.paste(self.wm.img, (right, center_h))
+        elif self.position == 'BL':
+            dst_img.paste(self.wm.img, (0, bottom))
+        elif self.position == 'B':
+            dst_img.paste(self.wm.img, (center_w, bottom))
+        elif self.position == 'BR':
+            dst_img.paste(self.wm.img, (right, bottom))
+        else:
+            dst_img.paste(self.wm.img, (center_w, center_h))
         return dst_img
