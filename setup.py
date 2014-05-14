@@ -3,9 +3,15 @@ from setuptools import find_packages
 
 import os
 import sys
-src_dir = os.path.join(os.path.dirname(__file__), 'src')
-sys.path.insert(0, src_dir)
+ROOT_DIR = os.path.dirname(__file__)
+SRC_DIR = os.path.join(ROOT_DIR, 'src')
+sys.path.insert(0, SRC_DIR)
 import watermarks
+
+
+def get_requirements():
+    with open(os.path.join(ROOT_DIR, 'requirements.txt'), 'r') as fr:
+        return [l.strip() for l in fr.readlines()]
 
 
 setup(
@@ -37,9 +43,5 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Multimedia :: Graphics",
         ],
-    install_requires=[
-        'Pillow==2.3.0',
-        'six==1.6.1',
-        'argparse==1.2.1',
-    ],
+    install_requires=get_requirements(),
 )
