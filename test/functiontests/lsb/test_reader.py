@@ -1,6 +1,7 @@
 import os
 import subprocess
 
+from nose import SkipTest
 from nose.tools import assert_equal, assert_true
 from PIL import Image
 
@@ -101,9 +102,12 @@ def test_bin(dst_dir):
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
-    sp = subprocess.Popen(
-        ['wm_reader', '-m', 'lsb', '-q', '-d', dst_dir, filepath],
-    )
+    try:
+        sp = subprocess.Popen(
+            ['wm_reader', '-m', 'lsb', '-q', '-d', dst_dir, filepath],
+        )
+    except FileNotFoundError:
+        raise SkipTest('binaries are not present (hint: run tests via tox)')
     sp.communicate()
 
     assert_equal(sp.returncode, 0)

@@ -2,6 +2,7 @@ import os
 import shutil
 import subprocess
 
+from nose import SkipTest
 from nose.tools import assert_equal, assert_true
 
 from watermarks.core.watermark import create_watermark
@@ -126,10 +127,13 @@ def test_bin(dst_dir):
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
-    sp = subprocess.Popen(
-        ['wm_writer', '-m', 'lsb', '-q', '-d', dst_dir, '-s',
-         '_watermarked_test', '-w', filepath, filepath],
-    )
+    try:
+        sp = subprocess.Popen(
+            ['wm_writer', '-m', 'lsb', '-q', '-d', dst_dir, '-s',
+             '_watermarked_test', '-w', filepath, filepath],
+        )
+    except FileNotFoundError:
+        raise SkipTest('binaries are not present (hint: run tests via tox)')
     stdout, stderr = sp.communicate()
 
     assert_equal(sp.returncode, 0)
