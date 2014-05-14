@@ -40,5 +40,6 @@ setup(
     install_requires=[
         'Pillow==2.3.0',
         'six==1.6.1',
+        'argparse==1.2.1',
     ],
 )

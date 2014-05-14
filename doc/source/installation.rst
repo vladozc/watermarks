@@ -42,6 +42,3 @@ Then reinstall the ``pillow`` dependency::
   pip install -r requirements.txt
 
 If it is still not running, please visit `pillow's documentation <http://pillow.readthedocs.org/en/latest/installation.html>`_ for more installation help.
-
-*Note: When using Python 2.6, you might also need to install `argparse`.*
-
