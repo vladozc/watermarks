@@ -29,8 +29,8 @@ class Visible(BaseWriter):
         wm_w, wm_h = self.wm.img.size
         right = dst_w - wm_w
         bottom = dst_h - wm_h
-        center_w = math.floor(right / 2)
-        center_h = math.floor(bottom / 2)
+        center_w = math.floor(right / 2) if right > 0 else math.ceil(right / 2)
+        center_h = math.floor(bottom / 2) if bottom > 0 else math.ceil(bottom / 2)
         if self.position == 'TL':
             dst_img.paste(self.wm.img, (0, 0))
         elif self.position == 'T':

@@ -23,7 +23,8 @@ def small(wm, pos):
 
 def big(wm, pos):
     run_visible_and_assert(
-        'shape1-rgb-l0.png', 'gen-wmode-wm-rgb.png', wm, position=pos)
+        'shape1-rgb-l0.png', 'gen-wmode-wm-rgb.png', wm,
+        width=16, height=16, position=pos)
 
 
 def test_small_tl():
