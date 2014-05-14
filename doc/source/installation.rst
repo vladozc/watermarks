@@ -17,6 +17,10 @@ Library requires Python 2.6/2.7/3.x. It uses some third party libs. You can inst
 
   pip install -r requirements.txt
 
+For development, you might also find usefull libs from `requirements-devel.txt`. Install them similarly::
+
+  pip install -r requirements-devel.txt
+
 You can test Watermarks by calling selftest() function::
 
   >>> from watermarks.selftest import selftest
