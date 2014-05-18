@@ -6,6 +6,7 @@ from PIL import Image
 
 def main(dst_path, img_modes_prefix, wm_modes_prefix):
     generate_img_modes_types(dst_path, img_modes_prefix)
+    generate_img2_modes_types(dst_path, img_modes_prefix)
     generate_wm_modes(dst_path, wm_modes_prefix)
     generate_unsupported(dst_path)
     return 0
@@ -23,6 +24,16 @@ def generate_img_modes_types(dst_path, prefix):
     for format_ in ('png', 'bmp', 'jpg'):
         img = Image.merge('RGB', [band_wm]*3)
         img.save(os.path.join(dst_path, 'gen-%s-rgb.%s' % (prefix, format_)))
+
+
+def generate_img2_modes_types(dst_path, prefix):
+    band_data = [255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255]
+    band_wm = Image.new('L', (5, 3))
+    band_wm.putdata(band_data)
+
+    for format_ in ('png', ):
+        img = Image.merge('RGB', [band_wm]*3)
+        img.save(os.path.join(dst_path, 'gen2-%s-rgb.%s' % (prefix, format_)))
 
 
 def generate_wm_modes(dst_path, prefix):
