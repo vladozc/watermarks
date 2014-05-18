@@ -10,11 +10,33 @@ from .. import (
     run_writer_and_assert, DATA_DIR, in_tmp, IM_PREFIX, WM_PREFIX,
     create_data_dir,
 )
-from . import WM1_WM, WM1_WM_JPG, WM2, WM_BIG, WM_SMALL
+from . import (
+    WM1_WM, WM1_WM_JPG, WM2,
+    WM_SMALL_TL, WM_SMALL_T, WM_SMALL_TR,
+    WM_SMALL_L, WM_SMALL_C, WM_SMALL_R,
+    WM_SMALL_BL, WM_SMALL_B, WM_SMALL_BR,
+    WM_BIG_TL, WM_BIG_T, WM_BIG_TR,
+    WM_BIG_L, WM_BIG_C, WM_BIG_R,
+    WM_BIG_BL, WM_BIG_B, WM_BIG_BR,
+)
 
 
 def run_lsb_and_assert(*args, **kwargs):
     return run_writer_and_assert(Lsb, *args, **kwargs)
+
+
+def small(wm, pos):
+    run_lsb_and_assert(
+        'gen-%s-wm-rgb.png' % WM_PREFIX, 'rgb-24-16b.png', wm,
+         width=10, height=5, position=pos,
+    )
+
+
+def big(wm, pos):
+    run_lsb_and_assert(
+        'gen2-%s-rgb.png' % IM_PREFIX, 'rgb-24-16b.png', wm,
+         width=5, height=3, position=pos,
+    )
 
 
 def test_g_gif():
@@ -81,12 +103,76 @@ def test_wm_mode_rgba():
     run_lsb_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-rgba.png' % WM_PREFIX, WM2)
 
 
-def test_big_wm():
-    run_lsb_and_assert('rgb-24-16b.png', 'gen-%s-wm-rgb.png' % WM_PREFIX, WM_BIG)
+def test_small_wm_tl():
+    small(WM_SMALL_TL, 'tl')
 
 
-def test_small_wm():
-    run_lsb_and_assert('gen-%s-wm-rgb.png' % WM_PREFIX, 'rgb-24-16b.png', WM_SMALL)
+def test_small_wm_t():
+    small(WM_SMALL_T, 't')
+
+
+def test_small_wm_tr():
+    small(WM_SMALL_TR, 'tr')
+
+
+def test_small_wm_l():
+    small(WM_SMALL_L, 'l')
+
+
+def test_small_wm_c():
+    small(WM_SMALL_C, 'c')
+
+
+def test_small_wm_r():
+    small(WM_SMALL_R, 'r')
+
+
+def test_small_wm_bl():
+    small(WM_SMALL_BL, 'bl')
+
+
+def test_small_wm_b():
+    small(WM_SMALL_B, 'b')
+
+
+def test_small_wm_br():
+    small(WM_SMALL_BR, 'br')
+
+
+def test_big_wm_tl():
+    big(WM_BIG_TL, 'tl')
+
+
+def test_big_wm_t():
+    big(WM_BIG_T, 't')
+
+
+def test_big_wm_tr():
+    big(WM_BIG_TR, 'tr')
+
+
+def test_big_wm_l():
+    big(WM_BIG_L, 'l')
+
+
+def test_big_wm_c():
+    big(WM_BIG_C, 'c')
+
+
+def test_big_wm_r():
+    big(WM_BIG_R, 'r')
+
+
+def test_big_wm_bl():
+    big(WM_BIG_BL, 'bl')
+
+
+def test_big_wm_b():
+    big(WM_BIG_B, 'b')
+
+
+def test_big_wm_br():
+    big(WM_BIG_BR, 'br')
 
 
 def test_unsupported_format():
