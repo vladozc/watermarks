@@ -13,7 +13,7 @@ def init(args):
     '''Returns initialized Lsb (reader) object from arguments passed from
     command line.
     '''
-    return Lsb(args.dest_dir, args.format)
+    return Lsb(args.dest_dir, args.format, args.suffix)
 
 
 class Lsb(BaseReader):
