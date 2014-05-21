@@ -129,7 +129,7 @@ def test_bin(dst_dir):
 
     try:
         sp = subprocess.Popen(
-            ['wm_writer', '-m', 'lsb', '-q', '-d', dst_dir, '-s',
+            ['wm_writer', 'lsb', '-q', '-d', dst_dir, '-s',
              '_watermarked_test', '-w', filepath, filepath],
         )
     except FileNotFoundError:

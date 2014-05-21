@@ -17,20 +17,22 @@ class Loader(object):
             and it is part of import path.
         '''
         self.type = type_
+        self.module = None
 
     def run(self, args):
         '''Runs desired watermark method with `args`.'''
-        module = self._load_method(args.method)
-        x = module.init(args)
+        if not self.module:
+            self.load_method(args.method)
+        x = self.module.init(args)
         return x.run(args.sources)
 
-    def _load_method(self, method):
+    def load_method(self, method):
         local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type + '.' + method
         try:
             logger.debug('Trying to load method from local modules.')
-            module = __import__(local_method, fromlist=('init',))
+            module = __import__(local_method, fromlist=('init', 'update_args'))
         except ImportError:
             logger.debug('Loading method from local modules failed, trying '
                          'to load from global scope.')
-            module = __import__(method, fromlist=('init',))
-        return module
+            module = __import__(method, fromlist=('init', 'update_args'))
+        self.module = module

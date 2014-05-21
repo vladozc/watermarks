@@ -12,8 +12,8 @@ logger = logging.getLogger()
 
 
 def run():
-    parser = setup_parser()
-    args = parser.parse_args()
+    parser = setup_basic_parser()
+    args = parser.parse_known_args()[0]
     if args.verbose:
         ll = logging.DEBUG
     elif args.quiet:
@@ -21,9 +21,14 @@ def run():
     else:
         ll = None
     setup_logger(ll)
-    logger.debug(args)
+    logger.debug('basic reader args: %s', args)
     r = Loader('readers')
     try:
+        r.load_method(args.method)
+        update_parser(parser)
+        r.module.update_parser(parser)
+        args = parser.parse_args()
+        logger.debug('all args: %s', args)
         r.run(args)
         return 0
     except ImportError:
@@ -33,13 +38,12 @@ def run():
         return 1
 
 
-def setup_parser():
+def setup_basic_parser():
     description = 'Utility for reading watermarks from images.'
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
-        'sources', metavar='PTH', nargs='+',
-        help='List of files/directories that will be processed. Directories '
-             'will be listed (but not recursive).'
+        'method', metavar='METHOD',
+        help='Watermark method to be applied.'
     )
     parser.add_argument(
         '-q', '--quiet', action='store_true', help='Be quiet.'
@@ -47,9 +51,14 @@ def setup_parser():
     parser.add_argument(
         '-v', '--verbose', action='store_true', help='Be verbose.'
     )
+    return parser
+
+
+def update_parser(parser):
     parser.add_argument(
-        '-m', '--method', required=True,
-        help='Watermark method to be applied.'
+        'sources', metavar='PTH', nargs='+',
+        help='List of files/directories that will be processed. Directories '
+             'will be listed (but not recursive).'
     )
     parser.add_argument(
         '-d', '--dest-dir', required=True,

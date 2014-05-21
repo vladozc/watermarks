@@ -13,7 +13,7 @@ Examples
 
 Binary::
 
-  $ PYTHONPATH=src python bin/reader.py -m lsb -d tmp test/data/shape1-rgb-l0.png
+  $ PYTHONPATH=src python bin/reader.py lsb -d tmp test/data/shape1-rgb-l0.png
 
 Loader::
 

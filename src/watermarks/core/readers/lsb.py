@@ -9,6 +9,10 @@ from watermarks.core.readers import BaseReader
 logger = logging.getLogger()
 
 
+def update_parser(parser):
+    pass
+
+
 def init(args):
     '''Returns initialized Lsb (reader) object from arguments passed from
     command line.

@@ -6,6 +6,10 @@ from watermarks.core.writers import BaseWriter
 logger = logging.getLogger()
 
 
+def update_parser(parser):
+    pass
+
+
 def init(args):
     '''Returns initialized Visible (writer) object from arguments passed from
     command line.
