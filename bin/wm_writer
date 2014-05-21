@@ -42,7 +42,7 @@ def setup_basic_parser():
     description = 'Utility for writing watermarks to images.'
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
-        '-m', '--method', required=True,
+        'method', metavar='METHOD',
         help='Watermark method to be applied.'
     )
     parser.add_argument(
