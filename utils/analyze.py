@@ -19,8 +19,16 @@ def analyze(filepath, verbose):
     print ('Bands:\t{0}'.format(img.getbands()))
     if verbose:
         img.load()
+        width = img.size[0]
         for band_name, band in zip(img.getbands(), img.split()):
-            print ('Band {0}:\t{1}'.format(band_name, list(band.getdata())))
+            band_data = list(band.getdata())
+            print('\nBand {0}:'.format(band_name))
+            start_index = 0
+            while start_index < len(band_data):
+                end_index = start_index + width
+                part = str(band_data[start_index:end_index])
+                print('{0},'.format(part.strip('[').strip(']')))
+                start_index = end_index
 
 
 if __name__ == '__main__':
