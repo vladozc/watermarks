@@ -17,7 +17,7 @@ class BaseWriter(BaseMethod):
     '''
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, destination, format_, wm, suffix='_watermarked'):
+    def __init__(self, destination, format_, wm, suffix='_watermarked', position='C'):
         '''
         :param str destination:
             Destination where watermarked images will be stored.
@@ -31,11 +31,16 @@ class BaseWriter(BaseMethod):
         :param str suffix:
             Suffix added to generated files. If set to empty string,
             generated image will overwrite original image.
+
+        :param str position:
+            Watermark position. Allowed values are `TL`, `T`, `TR`, `L`,
+            `C`, `R`, `BL`, `B`, `BR`.
         '''
         self.destination = destination
         self.format = format_
         self.wm = wm
         self.suffix = suffix
+        self.position = position.upper()
 
     def _generate_files(self, filepath, src_img):
         base_name, _ = os.path.splitext(os.path.basename(filepath))

@@ -38,7 +38,8 @@ class Lsb(BaseWriter):
         if src_width == wm_width and src_height == wm_height:
             wm = self.wm
         else:
-            wm = create_watermark(self.wm.img, width=src_width, height=src_height)
+            wm = create_watermark(self.wm.img, width=src_width,
+                height=src_height, position=self.position)
         for band in bands:
             band_wm = Image.new('L', src_img.size)
             band_wm.putdata([convert(orig_px, wm_px, wm.threshold) 

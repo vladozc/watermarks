@@ -73,7 +73,8 @@ def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=Non
 
 @in_tmp
 def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
-                          wm_data=None, ext=None, width=None, height=None):
+                          wm_data=None, ext=None, width=None, height=None,
+                          position=''):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
@@ -82,8 +83,8 @@ def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
     if not width or not height:
         img = Image.open(filepath)
         width, height = img.size
-    wm = create_watermark(wm_filepath, width=width, height=height)
-    writer = writer_class(dst_dir, ext.lstrip('.'), wm, suffix)
+    wm = create_watermark(wm_filepath, width=width, height=height, position=position)
+    writer = writer_class(dst_dir, ext.lstrip('.'), wm, suffix, position)
     results = list(writer.run([filepath]))
     if wm_data is None:
         assert_equal(len(results), 0)

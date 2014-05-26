@@ -1,5 +1,6 @@
 import logging
 import os
+import math
 
 import six
 from PIL import Image
@@ -46,7 +47,7 @@ class Watermark(object):
             raise
 
 
-def create_watermark(wm, width=None, height=None, *args, **kwargs):
+def create_watermark(wm, width=None, height=None, position=None, *args, **kwargs):
     if isinstance(wm, six.string_types):
         if not os.path.isfile(wm):
             logger.critical('Watermark file "%s" does not exist!' % wm)
@@ -56,8 +57,30 @@ def create_watermark(wm, width=None, height=None, *args, **kwargs):
     if width and height:
         img_w, img_h = wm.size
         if img_w != width or img_h != height:
+            right = width - img_w
+            bottom = height - img_h
+            center_w = math.floor(right / 2) if right > 0 else math.ceil(right / 2)
+            center_h = math.floor(bottom / 2) if bottom > 0 else math.ceil(bottom / 2)
             sized_img = Image.new(wm.mode, (width, height), 'white')
-            sized_img.paste(wm, (0, 0))
+            position = position.upper()
+            if position == 'TL':
+                sized_img.paste(wm, (0, 0))
+            elif position == 'T':
+                sized_img.paste(wm, (center_w, 0))
+            elif position == 'TR':
+                sized_img.paste(wm, (right, 0))
+            elif position == 'L':
+                sized_img.paste(wm, (0, center_h))
+            elif position == 'R':
+                sized_img.paste(wm, (right, center_h))
+            elif position == 'BL':
+                sized_img.paste(wm, (0, bottom))
+            elif position == 'B':
+                sized_img.paste(wm, (center_w, bottom))
+            elif position == 'BR':
+                sized_img.paste(wm, (right, bottom))
+            else:
+                sized_img.paste(wm, (center_w, center_h))
             sized_img.format = wm.format
             wm = sized_img
 
