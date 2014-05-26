@@ -1,4 +1,5 @@
 import logging
+import os
 
 import six
 from PIL import Image
@@ -47,6 +48,9 @@ class Watermark(object):
 
 def create_watermark(wm, width=None, height=None, *args, **kwargs):
     if isinstance(wm, six.string_types):
+        if not os.path.isfile(wm):
+            logger.critical('Watermark file "%s" does not exist!' % wm)
+            exit(1)
         wm = Image.open(wm)
 
     if width and height:
