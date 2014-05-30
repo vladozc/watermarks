@@ -59,8 +59,8 @@ def create_watermark(wm, width=None, height=None, position=None, *args, **kwargs
         if img_w != width or img_h != height:
             right = width - img_w
             bottom = height - img_h
-            center_w = math.floor(right / 2) if right > 0 else math.ceil(right / 2)
-            center_h = math.floor(bottom / 2) if bottom > 0 else math.ceil(bottom / 2)
+            center_w = int(math.floor(right / 2.0) if right > 0 else math.ceil(right / 2.0))
+            center_h = int(math.floor(bottom / 2.0) if bottom > 0 else math.ceil(bottom / 2.0))
             sized_img = Image.new(wm.mode, (width, height), 'white')
             position = position.upper()
             if position == 'TL':
