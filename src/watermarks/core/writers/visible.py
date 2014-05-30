@@ -1,7 +1,7 @@
 import logging
 import math
 
-from watermarks.core.watermark import create_watermark 
+from watermarks.core.watermark import create_watermark
 from watermarks.core.writers import BaseWriter
 
 logger = logging.getLogger()
@@ -33,8 +33,10 @@ class Visible(BaseWriter):
         wm_w, wm_h = self.wm.img.size
         right = dst_w - wm_w
         bottom = dst_h - wm_h
-        center_w = int(math.floor(right / 2.0) if right > 0 else math.ceil(right / 2.0))
-        center_h = int(math.floor(bottom / 2.0) if bottom > 0 else math.ceil(bottom / 2.0))
+        center_w = int(math.floor(right / 2.0) if right > 0 else
+                       math.ceil(right / 2.0))
+        center_h = int(math.floor(bottom / 2.0) if bottom > 0 else
+                       math.ceil(bottom / 2.0))
         if self.position == 'TL':
             dst_img.paste(self.wm.img, (0, 0))
         elif self.position == 'T':

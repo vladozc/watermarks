@@ -27,7 +27,8 @@ class Loader(object):
         return x.run(args.sources)
 
     def load_method(self, method):
-        local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type + '.' + method
+        local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type \
+            + '.' + method
         try:
             logger.debug('Trying to load method from local modules.')
             module = __import__(local_method, fromlist=('init', 'update_args'))

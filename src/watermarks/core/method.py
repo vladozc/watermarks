@@ -46,13 +46,15 @@ class BaseMethod(object):
     def _process_file(self, filepath):
         src_img = Image.open(filepath)
         if src_img.format not in self.allowed_formats:
-            logger.warning('File "%s" is in not allowed format. (skip)', filepath)
+            logger.warning('File "%s" is in not allowed format. (skip)',
+                           filepath)
             return []
 
         if src_img.mode in self.allowed_modes:
             return self._generate_files(filepath, src_img)
         else:
-            logger.warning('File "%s" is in unsupported mode "%s". (skip)', filepath, src_img.mode)
+            logger.warning('File "%s" is in unsupported mode "%s". (skip)',
+                           filepath, src_img.mode)
             return []
 
     @abc.abstractproperty
@@ -66,4 +68,3 @@ class BaseMethod(object):
     @abc.abstractproperty
     def allowed_modes(self):
         '''List of allowed image modes for particular method.'''
-

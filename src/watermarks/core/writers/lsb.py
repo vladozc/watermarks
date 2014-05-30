@@ -2,7 +2,7 @@ import logging
 
 from PIL import Image
 
-from watermarks.core.watermark import create_watermark 
+from watermarks.core.watermark import create_watermark
 from watermarks.core.writers import BaseWriter
 
 logger = logging.getLogger()
@@ -39,13 +39,13 @@ class Lsb(BaseWriter):
             wm = self.wm
         else:
             wm = create_watermark(self.wm.img, width=src_width,
-                height=src_height, position=self.position)
+                                  height=src_height, position=self.position)
         for band in bands:
             band_wm = Image.new('L', src_img.size)
-            band_wm.putdata([convert(orig_px, wm_px, wm.threshold) 
-                             for orig_px, wm_px 
+            band_wm.putdata([convert(orig_px, wm_px, wm.threshold)
+                             for orig_px, wm_px
                              in zip(band.getdata(), wm.band.getdata())
-                            ])
+                             ])
             bands_wm.append(band_wm)
         dst_img = Image.merge(src_img.mode, bands_wm)
         return dst_img

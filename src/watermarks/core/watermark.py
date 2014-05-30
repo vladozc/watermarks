@@ -14,8 +14,8 @@ MODE_DEPTHS = {
     'RGB': 8,
     'RGBA': 8,
     'CMYK': 8,
-    #'I': 32,
-    #'F': 32,
+    # 'I': 32,
+    # 'F': 32,
 }
 logger = logging.getLogger()
 
@@ -30,7 +30,8 @@ class Watermark(object):
     def init(self):
         '''Initializes watermark - load, set width/height, ...'''
         if self.img.format not in ALLOWED_FORMATS:
-            logger.warning('Watermark format "%s" is not allowed. (skip)', self.img.format)
+            logger.warning('Watermark format "%s" is not allowed. (skip)',
+                           self.img.format)
             raise ValueError()
         self.img.load()
         self.width, self.height = self.img.size
@@ -42,12 +43,13 @@ class Watermark(object):
         try:
             return 2 ** MODE_DEPTHS[self.img.mode] - 1
         except KeyError:
-            logger.critical('Watermark mode "%s" is not supported!', 
+            logger.critical('Watermark mode "%s" is not supported!',
                             self.img.mode)
             raise
 
 
-def create_watermark(wm, width=None, height=None, position=None, *args, **kwargs):
+def create_watermark(wm, width=None, height=None, position=None, *args,
+                     **kwargs):
     if isinstance(wm, six.string_types):
         if not os.path.isfile(wm):
             logger.critical('Watermark file "%s" does not exist!' % wm)
@@ -59,8 +61,10 @@ def create_watermark(wm, width=None, height=None, position=None, *args, **kwargs
         if img_w != width or img_h != height:
             right = width - img_w
             bottom = height - img_h
-            center_w = int(math.floor(right / 2.0) if right > 0 else math.ceil(right / 2.0))
-            center_h = int(math.floor(bottom / 2.0) if bottom > 0 else math.ceil(bottom / 2.0))
+            center_w = int(math.floor(right / 2.0) if right > 0 else
+                           math.ceil(right / 2.0))
+            center_h = int(math.floor(bottom / 2.0) if bottom > 0 else
+                           math.ceil(bottom / 2.0))
             sized_img = Image.new(wm.mode, (width, height), 'white')
             position = position.upper()
             if position == 'TL':
