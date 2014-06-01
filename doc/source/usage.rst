@@ -3,7 +3,7 @@ Usage
 
 There are few different ways to run Watermarks:
 
-- executable binary from ``bin`` folder (not part of pip installation yet)
+- executables ``wm_reader`` and ``wm_writer``
 - using ``watermarks.core.loader.Loader`` to load and run method
 - using method's init function, e.g. ``watermarks.core.writers.lsb.init``
 - make method instance (e.g. ``watermarks.core.writers.lsb.Lsb``) by yourself
@@ -11,7 +11,7 @@ There are few different ways to run Watermarks:
 Examples
 --------
 
-Binary::
+Executable::
 
   (e) $ wm_reader lsb -d tmp test/data/shape1-rgb-l0.png
 
