@@ -19,7 +19,7 @@ def test_writer(dst_dir):
             ['wm_writer', 'lsb', '-q', '-d', dst_dir, '-s',
              '_watermarked_test', '-w', filepath, filepath],
         )
-    except FileNotFoundError:
+    except OSError:
         raise SkipTest('executables are not present (hint: run tests via tox)')
     stdout, stderr = sp.communicate()
 
@@ -39,7 +39,7 @@ def test_reader(dst_dir):
         sp = subprocess.Popen(
             ['wm_reader', 'lsb', '-q', '-d', dst_dir, '-s', suffix, filepath],
         )
-    except FileNotFoundError:
+    except OSError:
         raise SkipTest('executables are not present (hint: run tests via tox)')
     sp.communicate()
 
