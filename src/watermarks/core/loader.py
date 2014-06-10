@@ -17,23 +17,28 @@ class Loader(object):
             and it is part of import path.
         '''
         self.type = type_
-        self.module = None
+        self.modules = None
 
     def run(self, args):
-        '''Runs desired watermark method with `args`.'''
-        if not self.module:
-            self.load_method(args.method)
-        x = self.module.init(args)
-        return x.run(args.sources)
+        '''Runs desired watermark methods with `args`.'''
+        new_files = []
+        if not self.modules:
+            self.load_methods(args.methods)
+        for module in self.modules:
+            x = module.init(args)
+            new_files.extend(x.run(args.sources))
+        return new_files
 
-    def load_method(self, method):
-        local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type \
-            + '.' + method
-        try:
-            logger.debug('Trying to load method from local modules.')
-            module = __import__(local_method, fromlist=('init', 'update_args'))
-        except ImportError:
-            logger.debug('Loading method from local modules failed, trying '
-                         'to load from global scope.')
-            module = __import__(method, fromlist=('init', 'update_args'))
-        self.module = module
+    def load_methods(self, methods):
+        self.modules = []
+        for method in methods.split(','):
+            local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type \
+                + '.' + method
+            try:
+                logger.debug('Trying to load method from local modules.')
+                module = __import__(local_method, fromlist=('init', 'update_args'))
+            except ImportError:
+                logger.debug('Loading method from local modules failed, trying '
+                             'to load from global scope.')
+                module = __import__(method, fromlist=('init', 'update_args'))
+            self.modules.append(module)

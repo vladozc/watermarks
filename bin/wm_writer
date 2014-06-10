@@ -24,9 +24,10 @@ def run():
     logger.debug('basic writer args: %s', args)
     r = Loader('writers')
     try:
-        r.load_method(args.method)
+        r.load_methods(args.methods)
         update_parser(parser)
-        r.module.update_parser(parser)
+        for module in r.modules:
+            module.update_parser(parser)
         args = parser.parse_args()
         logger.debug('all args: %s', args)
         r.run(args)
@@ -42,8 +43,8 @@ def setup_basic_parser():
     description = 'Utility for writing watermarks to images.'
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument(
-        'method', metavar='METHOD',
-        help='Watermark method to be applied.'
+        'methods', metavar='METHOD',
+        help='Watermark method to be applied. You can specify more methods separated with comma.'
     )
     parser.add_argument(
         '-q', '--quiet', action='store_true', help='Be quiet.'
