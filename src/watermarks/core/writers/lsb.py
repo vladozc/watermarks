@@ -2,6 +2,7 @@ import logging
 
 from PIL import Image
 
+from watermarks.core.utils import get_correct_wm
 from watermarks.core.watermark import create_watermark
 from watermarks.core.writers import BaseWriter
 
@@ -16,7 +17,7 @@ def init(args):
     '''Returns initialized Lsb (writer) object from arguments passed from
     command line.
     '''
-    wm = create_watermark(args.watermark)
+    wm = create_watermark(get_correct_wm(args, __name__.split('.')[-1]))
     return Lsb(args.dest_dir, args.format, wm, args.suffix)
 
 

@@ -47,8 +47,7 @@ class BaseWriter(BaseMethod):
         base_name, _ = os.path.splitext(os.path.basename(filepath))
         logger.info('Processing file "%s"', filepath)
         dst_filepath = os.path.join(
-            self.destination,
-            '%s%s.%s' % (base_name, self.suffix, self.format)
+            self.destination, '%s%s.%s' % (base_name, self.suffix, self.format)
         )
         dst_img = self._create_watermarked(src_img)
         dst_img.save(dst_filepath)

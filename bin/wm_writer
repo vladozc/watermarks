@@ -30,7 +30,7 @@ def run():
             module.update_parser(parser)
         args = parser.parse_args()
         logger.debug('all args: %s', args)
-        r.run(args)
+        r.run(args, chaining=True)
         return 0
     except ImportError:
         logger.critical('Cannot find method "%s". Please make sure you '
@@ -62,7 +62,7 @@ def update_parser(parser):
              'will be listed (but not recursive).'
     )
     parser.add_argument(
-        '-w', '--watermark', required=True,
+        '-w', '--watermark', required=True, action='append',
         help='Watermark image.'
     )
     parser.add_argument(

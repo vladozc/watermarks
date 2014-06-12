@@ -19,14 +19,19 @@ class Loader(object):
         self.type = type_
         self.modules = None
 
-    def run(self, args):
+    def run(self, args, chaining=False):
         '''Runs desired watermark methods with `args`.'''
         new_files = []
         if not self.modules:
             self.load_methods(args.methods)
         for module in self.modules:
             x = module.init(args)
-            new_files.extend(x.run(args.sources))
+            if chaining:
+                new_files = x.run(args.sources)
+                args.sources = new_files
+                args.suffix = ''
+            else:
+                new_files.extend(x.run(args.sources))
         return new_files
 
     def load_methods(self, methods):

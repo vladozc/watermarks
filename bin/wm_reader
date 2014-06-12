@@ -29,6 +29,7 @@ def run():
         for module in r.modules:
             module.update_parser(parser)
         args = parser.parse_args()
+        setattr(args, 'is_in_chain', len(r.modules) > 1)
         logger.debug('all args: %s', args)
         r.run(args)
         return 0
