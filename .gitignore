@@ -7,4 +7,6 @@ test/data/gen-*
 build/
 dist/
 \.tox/
+\.coverage
+src/watermarks.egg-info/
 ep*
