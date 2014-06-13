@@ -37,6 +37,8 @@ class Loader(object):
     def load_methods(self, methods):
         self.modules = []
         for method in methods.split(','):
+            if not method:
+                continue
             local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type \
                 + '.' + method
             try:

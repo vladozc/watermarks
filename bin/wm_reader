@@ -11,6 +11,13 @@ from watermarks.core.loader import Loader
 logger = logging.getLogger()
 
 
+class MyParser(argparse.ArgumentParser):
+    def error(self, message):
+        sys.stderr.write('error: %s\n' % message)
+        self.print_help()
+        sys.exit(2)
+
+
 def run():
     parser = setup_basic_parser()
     args = parser.parse_known_args()[0]
@@ -28,24 +35,31 @@ def run():
         update_parser(parser)
         for module in r.modules:
             module.update_parser(parser)
+        if args.help:
+            parser.print_help()
+            exit(0)
         args = parser.parse_args()
         setattr(args, 'is_in_chain', len(r.modules) > 1)
         logger.debug('all args: %s', args)
         r.run(args)
         return 0
     except ImportError:
-        logger.critical('Cannot find method "%s". Please make sure you '
+        logger.critical('Cannot find method(s) "%s". Please make sure you '
                         'spelled it correctly and check your PYTHONPATH.',
-                        args.method)
+                        args.methods)
         return 1
 
 
 def setup_basic_parser():
     description = 'Utility for reading watermarks from images.'
-    parser = argparse.ArgumentParser(description=description)
+    parser = MyParser(description=description, add_help=False)
+    parser.add_argument(
+        '-h', '--help', action='store_true', help='Show this help message and exit.'
+    )
     parser.add_argument(
         'methods', metavar='METHOD',
-        help='Watermark method to be applied. You can specify more methods separated with comma.'
+        help='Watermark method to be applied. You can specify more methods '
+             'separated with comma. Supported built-in methods are: lsb'
     )
     parser.add_argument(
         '-q', '--quiet', action='store_true', help='Be quiet.'
@@ -74,7 +88,6 @@ def update_parser(parser):
         '-s', '--suffix', default='',
         help='Suffix of watermarked files (default: %(default)s).'
     )
-    return parser
 
 
 if __name__ == '__main__':
