@@ -1,5 +1,6 @@
 import argparse
 import logging
+import sys
 
 
 class WMParser(argparse.ArgumentParser):

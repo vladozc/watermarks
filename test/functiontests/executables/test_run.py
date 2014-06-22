@@ -7,6 +7,23 @@ from nose.tools import assert_equal, assert_true
 from .. import DATA_DIR, IM_PREFIX, in_tmp
 
 
+WM_WRITER = 'wm_writer'
+WM_READER = 'wm_reader'
+
+
+def run_command(command):
+    try:
+        sp = subprocess.Popen(
+            command,
+            stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE
+        )
+    except OSError:
+        raise SkipTest('executables are not present (hint: run tests via tox)')
+    sp.communicate()
+    return sp.returncode
+
+
 @in_tmp
 def test_writer(dst_dir):
     filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
@@ -14,16 +31,10 @@ def test_writer(dst_dir):
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
-    try:
-        sp = subprocess.Popen(
-            ['wm_writer', 'lsb', '-q', '-d', dst_dir, '-s',
-             '_watermarked_test', '-w', filepath, filepath],
-        )
-    except OSError:
-        raise SkipTest('executables are not present (hint: run tests via tox)')
-    stdout, stderr = sp.communicate()
+    rc = run_command([WM_WRITER, 'lsb', '-q', '-d', dst_dir, '-s',
+                     '_watermarked_test', '-w', filepath, filepath])
 
-    assert_equal(sp.returncode, 0)
+    assert_equal(rc, 0)
     assert_true(os.path.isfile(generated_filepath))
 
 
@@ -34,16 +45,11 @@ def test_writer_chain(dst_dir):
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
-    try:
-        sp = subprocess.Popen(
-            ['wm_writer', 'lsb,visible', '-q', '-d', dst_dir, '-s',
-             '_watermarked_test', '-w', filepath, '-w', filepath, filepath],
-        )
-    except FileNotFoundError:
-        raise SkipTest('executables are not present (hint: run tests via tox)')
-    stdout, stderr = sp.communicate()
+    rc = run_command([WM_WRITER, 'lsb,visible', '-q', '-d', dst_dir, '-s',
+                     '_watermarked_test', '-w', filepath, '-w', filepath,
+                     filepath])
 
-    assert_equal(sp.returncode, 0)
+    assert_equal(rc, 0)
     assert_true(os.path.isfile(generated_filepath))
     # TODO: check content of generated file
 
@@ -56,15 +62,9 @@ def test_reader(dst_dir):
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
-    try:
-        sp = subprocess.Popen(
-            ['wm_reader', 'lsb', '-q', '-d', dst_dir, '-s', suffix, filepath],
-        )
-    except OSError:
-        raise SkipTest('executables are not present (hint: run tests via tox)')
-    sp.communicate()
+    rc = run_command([WM_READER, 'lsb', '-q', '-d', dst_dir, '-s', suffix, filepath])
 
-    assert_equal(sp.returncode, 0)
+    assert_equal(rc, 0)
     assert_true(os.path.isfile(generated_filepath))
 
 
@@ -80,17 +80,20 @@ def test_reader_chain(dst_dir):
         if os.path.exists(generated_filepath):
             os.unlink(generated_filepath)
 
-    try:
-        sp = subprocess.Popen(
-            ['wm_reader', ','.join(methods), '-q', '-d', dst_dir, '-s', suffix, filepath],
-        )
-    except FileNotFoundError:
-        raise SkipTest('executables are not present (hint: run tests via tox)')
-    sp.communicate()
+    rc = run_command([WM_READER, ','.join(methods), '-q', '-d', dst_dir, '-s', suffix, filepath])
 
-    assert_equal(sp.returncode, 0)
+    assert_equal(rc, 0)
     for method in methods:
         generated_filepath = os.path.join(dst_dir, 'gen-%s-g_L_%s%s.png' % (IM_PREFIX, method, suffix))
         assert_true(os.path.isfile(generated_filepath))
     assert_true(len(methods) > 1)
 
+
+def test_writer_no_args():
+    rc = run_command([WM_WRITER])
+    assert_equal(rc, 2)
+
+
+def test_reader_no_args():
+    rc = run_command([WM_READER])
+    assert_equal(rc, 2)
