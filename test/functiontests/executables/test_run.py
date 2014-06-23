@@ -89,6 +89,36 @@ def test_reader_chain(dst_dir):
     assert_true(len(methods) > 1)
 
 
+def test_writer_help():
+    rc = run_command([WM_WRITER, '--help'])
+    assert_equal(rc, 0)
+
+
+def test_reader_help():
+    rc = run_command([WM_READER, '--help'])
+    assert_equal(rc, 0)
+
+
+def test_writer_method_help():
+    rc = run_command([WM_WRITER, 'lsb', '--help'])
+    assert_equal(rc, 0)
+
+
+def test_reader_method_help():
+    rc = run_command([WM_READER, 'lsb', '--help'])
+    assert_equal(rc, 0)
+
+
+def test_writer_version():
+    rc = run_command([WM_WRITER, '--version'])
+    assert_equal(rc, 0)
+
+
+def test_reader_version():
+    rc = run_command([WM_READER, '--version'])
+    assert_equal(rc, 0)
+
+
 def test_writer_no_args():
     rc = run_command([WM_WRITER])
     assert_equal(rc, 2)
@@ -97,3 +127,64 @@ def test_writer_no_args():
 def test_reader_no_args():
     rc = run_command([WM_READER])
     assert_equal(rc, 2)
+
+
+def test_writer_invalid_method():
+    rc = run_command([WM_WRITER, 'not_existing_method'])
+    assert_equal(rc, 1)
+
+
+def test_reader_invalid_method():
+    rc = run_command([WM_READER, 'not_existing_method'])
+    assert_equal(rc, 1)
+
+
+def test_writer_few_args1():
+    rc = run_command([WM_WRITER, 'lsb'])
+    assert_equal(rc, 2)
+
+
+def test_writer_few_args2():
+    rc = run_command([WM_WRITER, 'lsb', '-d'])
+    assert_equal(rc, 2)
+
+
+def test_writer_few_args3():
+    rc = run_command([WM_WRITER, 'lsb', '-d', 'tmp'])
+    assert_equal(rc, 2)
+
+
+def test_writer_few_args4():
+    rc = run_command([WM_WRITER, '-w'])
+    assert_equal(rc, 2)
+
+
+def test_writer_few_args5():
+    rc = run_command([WM_WRITER, 'lsb', '-w', 'image.png'])
+    assert_equal(rc, 2)
+
+
+def test_writer_few_args6():
+    rc = run_command([WM_WRITER, 'lsb', 'image.png'])
+    assert_equal(rc, 2)
+
+
+def test_reader_few_args1():
+    rc = run_command([WM_READER, 'lsb'])
+    assert_equal(rc, 2)
+
+
+def test_reader_few_args2():
+    rc = run_command([WM_READER, 'lsb', '-d'])
+    assert_equal(rc, 2)
+
+
+def test_reader_few_args3():
+    rc = run_command([WM_READER, 'lsb', '-d', 'tmp'])
+    assert_equal(rc, 2)
+
+
+def test_reader_few_args4():
+    rc = run_command([WM_READER, 'lsb', 'image.png'])
+    assert_equal(rc, 2)
+
