@@ -4,7 +4,8 @@ import os
 import sys
 
 from watermarks.bin import (
-    get_log_level, add_vq_args, add_common_args, WMParser,
+    handle_version, handle_help, get_log_level, add_basic_args, add_common_args,
+    WMParser,
 )
 from watermarks.core import setup_logger
 from watermarks.core.loader import Loader
@@ -14,7 +15,9 @@ logger = logging.getLogger()
 
 
 def run():
+    handle_version()
     parser = setup_basic_parser()
+    handle_help(parser)
     args = parser.parse_known_args()[0]
     setup_logger(get_log_level(args))
     logger.debug('basic writer args: %s', args)
@@ -42,15 +45,12 @@ def setup_basic_parser():
     description = 'Utility for writing watermarks to images.'
     parser = WMParser(description=description, add_help=False)
     parser.add_argument(
-        '-h', '--help', action='store_true', help='Show this help message and exit.'
-    )
-    parser.add_argument(
         'methods', metavar='METHOD',
         help='Watermark method to be applied. You can specify more methods '
              'separated with comma. Supported built-in methods are: '
              'lsb, visible'
     )
-    add_vq_args(parser)
+    add_basic_args(parser)
     return parser
 
 
