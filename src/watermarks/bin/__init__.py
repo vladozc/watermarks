@@ -35,10 +35,11 @@ def get_log_level(args):
 
 
 def add_basic_args(parser):
-    parser.add_argument(
+    vq_group = parser.add_mutually_exclusive_group()
+    vq_group.add_argument(
         '-q', '--quiet', action='store_true', help='Be quiet.'
     )
-    parser.add_argument(
+    vq_group.add_argument(
         '-v', '--verbose', action='store_true', help='Be verbose.'
     )
     parser.add_argument(

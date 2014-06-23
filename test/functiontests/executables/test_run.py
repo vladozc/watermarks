@@ -129,6 +129,16 @@ def test_reader_no_args():
     assert_equal(rc, 2)
 
 
+def test_writer_vq():
+    rc = run_command([WM_WRITER, '-v', '-q'])
+    assert_equal(rc, 2)
+
+
+def test_reader_vq():
+    rc = run_command([WM_READER, '-v', '-q'])
+    assert_equal(rc, 2)
+
+
 def test_writer_invalid_method():
     rc = run_command([WM_WRITER, 'not_existing_method'])
     assert_equal(rc, 1)
