@@ -13,13 +13,13 @@ From source code
 
 Download/clone repository from `GitHub <https://github.com/vladozc/watermarks>`_.
 
-Library requires Python 2.6/2.7/3.x. It uses some third party libs. You can install them with command::
+Library requires Python 2.6/2.7/3.x. You can build it with command::
+
+  python setup.py build
+
+For development, you might also find usefull 3rd party libs from `requirements.txt`. Install them with command::
 
   pip install -r requirements.txt
-
-For development, you might also find usefull libs from `requirements-devel.txt`. Install them similarly::
-
-  pip install -r requirements-devel.txt
 
 You can test Watermarks by calling selftest() function::
 
