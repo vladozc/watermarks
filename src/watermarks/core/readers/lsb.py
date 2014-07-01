@@ -17,7 +17,8 @@ def init(args):
     '''Returns initialized Lsb (reader) object from arguments passed from
     command line.
     '''
-    return Lsb(args.dest_dir, args.format, args.suffix, is_in_chain=args.is_in_chain)
+    return Lsb(args.dest_dir, args.format, args.suffix,
+               is_in_chain=args.is_in_chain)
 
 
 class Lsb(BaseReader):

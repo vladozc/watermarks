@@ -46,7 +46,8 @@ def add_basic_args(parser):
         '--version', action='store_true', help='Show version and quit.'
     )
     parser.add_argument(
-        '-h', '--help', action='store_true', help='Show this help message and exit.'
+        '-h', '--help', action='store_true',
+        help='Show this help message and exit.'
     )
 
 

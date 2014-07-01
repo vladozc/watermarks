@@ -39,13 +39,14 @@ class Loader(object):
         for method in methods.split(','):
             if not method:
                 continue
-            local_method = self.__module__.rsplit('.', 1)[0] + '.' + self.type \
-                + '.' + method
+            local_method = self.__module__.rsplit('.', 1)[0] + '.' \
+                + self.type + '.' + method
             try:
                 logger.debug('Trying to load method from local modules.')
-                module = __import__(local_method, fromlist=('init', 'update_args'))
+                module = __import__(local_method,
+                                    fromlist=('init', 'update_args'))
             except ImportError:
-                logger.debug('Loading method from local modules failed, trying '
-                             'to load from global scope.')
+                logger.debug('Loading method from local modules failed, '
+                             'trying to load from global scope.')
                 module = __import__(method, fromlist=('init', 'update_args'))
             self.modules.append(module)

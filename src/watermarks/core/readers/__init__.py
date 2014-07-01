@@ -37,10 +37,11 @@ class BaseReader(BaseMethod):
         base_name, _ = os.path.splitext(os.path.basename(filepath))
         logger.info('Processing file "%s"', filepath)
         dst_imgs = self._create_watermarked(src_img)
+        class_name = self.__class__.__name__.lower()
         for band_name, dst_img in zip(src_img.getbands(), dst_imgs):
             dst_filepath = os.path.join(self.destination, '%s_%s%s%s.%s' % (
                 base_name, band_name,
-                '_%s' % self.__class__.__name__.lower() if self.is_in_chain else '',
+                '_%s' % class_name if self.is_in_chain else '',
                 self.suffix, self.format))
             dst_img.save(dst_filepath)
             logger.info('Generated file "%s".', dst_filepath)
