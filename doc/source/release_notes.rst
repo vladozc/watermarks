@@ -1,6 +1,14 @@
 Release notes
 =============
 
+0.3 (01.07.2014)
+----------------
+- read/write multiple watermarks (like in chain)
+- custom help for methods
+- added arg --version
+- switch to latest pillow (2.4.0)
+- lot of new tests
+
 0.2 (01.06.2014)
 ----------------
 
