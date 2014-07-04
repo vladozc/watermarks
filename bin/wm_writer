@@ -60,6 +60,11 @@ def update_parser(parser):
         '-w', '--watermark', required=True, action='append',
         help='Watermark image.'
     )
+    parser.add_argument(
+        '-p', '--position', default='C',
+        choices=['TL', 'T', 'TR', 'L', 'C', 'R', 'BL', 'B', 'BR'],
+        help='Watermark position. Default: %(default)s'
+    )
 
 
 if __name__ == '__main__':
