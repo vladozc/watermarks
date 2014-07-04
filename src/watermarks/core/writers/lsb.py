@@ -18,7 +18,7 @@ def init(args):
     command line.
     '''
     wm = create_watermark(get_correct_wm(args, __name__.split('.')[-1]))
-    return Lsb(args.dest_dir, args.format, wm, args.suffix)
+    return Lsb(args.dest_dir, args.format, wm, args.suffix, args.position)
 
 
 class Lsb(BaseWriter):
