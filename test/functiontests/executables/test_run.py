@@ -5,23 +5,7 @@ from nose import SkipTest
 from nose.tools import assert_equal, assert_true
 
 from .. import DATA_DIR, IM_PREFIX, in_tmp
-
-
-WM_WRITER = 'wm_writer'
-WM_READER = 'wm_reader'
-
-
-def run_command(command):
-    try:
-        sp = subprocess.Popen(
-            command,
-            stderr=subprocess.PIPE,
-            stdout=subprocess.PIPE
-        )
-    except OSError:
-        raise SkipTest('executables are not present (hint: run tests via tox)')
-    sp.communicate()
-    return sp.returncode
+from . import WM_WRITER, WM_READER, run_command
 
 
 @in_tmp
