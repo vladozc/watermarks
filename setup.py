@@ -13,7 +13,7 @@ setup(
     name='watermarks',
     package_dir={'': 'src'},
     packages=find_packages('src'),
-    scripts=['bin/wm_reader', 'bin/wm_writer'],
+    scripts=['bin/wm-reader', 'bin/wm-writer'],
     version=watermarks.__version__,
     description='Library for adding/reading watermarks from images. Currently visible and LSB watermark methods are supported.',
     author='Vladimir Chovanec',

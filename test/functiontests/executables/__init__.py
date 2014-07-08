@@ -3,8 +3,8 @@ import subprocess
 from nose import SkipTest
 
 
-WM_WRITER = 'wm_writer'
-WM_READER = 'wm_reader'
+WM_WRITER = 'wm-writer'
+WM_READER = 'wm-reader'
 
 
 def run_command(command):
