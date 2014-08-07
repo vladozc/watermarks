@@ -1,7 +1,5 @@
 import os
-import subprocess
 
-from nose import SkipTest
 from nose.tools import assert_equal, assert_true
 
 from .. import DATA_DIR, IM_PREFIX, in_tmp
