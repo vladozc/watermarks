@@ -30,6 +30,10 @@ class Lsb(BaseWriter):
     allowed_formats = ('BMP', 'PNG', 'GIF', 'JPEG')
     allowed_modes = ('CMYK', 'L', 'RGB')
 
+    def __init__(self, *args, **kwargs):
+        super(Lsb, self).__init__(*args, **kwargs)
+        self.format = self.format or 'png'  # set default format to png
+
     def _create_watermarked(self, src_img):
         src_img.load()
         bands = src_img.split()

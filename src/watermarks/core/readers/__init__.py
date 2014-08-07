@@ -34,7 +34,7 @@ class BaseReader(BaseMethod):
 
     def _generate_files(self, filepath, src_img):
         generated_filepaths = []
-        base_name, _ = os.path.splitext(os.path.basename(filepath))
+        base_name, orig_format = os.path.splitext(os.path.basename(filepath))
         logger.info('Processing file "%s"', filepath)
         dst_imgs = self._create_watermarked(src_img)
         class_name = self.__class__.__name__.lower()
@@ -42,7 +42,7 @@ class BaseReader(BaseMethod):
             dst_filepath = os.path.join(self.destination, '%s_%s%s%s.%s' % (
                 base_name, band_name,
                 '_%s' % class_name if self.is_in_chain else '',
-                self.suffix, self.format))
+                self.suffix, self.format or orig_format[1:]))
             dst_img.save(dst_filepath)
             logger.info('Generated file "%s".', dst_filepath)
             generated_filepaths.append(dst_filepath)

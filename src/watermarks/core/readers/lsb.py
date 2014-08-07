@@ -35,6 +35,10 @@ class Lsb(BaseReader):
     allowed_formats = ('BMP', 'GIF', 'JPEG', 'PNG')
     allowed_modes = ('CMYK', 'L', 'RGB')
 
+    def __init__(self, *args, **kwargs):
+        super(Lsb, self).__init__(*args, **kwargs)
+        self.format = self.format or 'png'  # set default format to png
+
     def _create_watermarked(self, src_img):
         dst_imgs = []
         src_img.load()

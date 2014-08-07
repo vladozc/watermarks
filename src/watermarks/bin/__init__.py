@@ -62,7 +62,7 @@ def add_common_args(parser):
         help='Directory where the extracted watermarks will be stored.'
     )
     parser.add_argument(
-        '--format', default='png',
+        '--format', default='',
         help='Format of generated images.'
     )
     parser.add_argument(

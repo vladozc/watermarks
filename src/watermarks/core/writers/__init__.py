@@ -44,10 +44,10 @@ class BaseWriter(BaseMethod):
         self.position = position.upper()
 
     def _generate_files(self, filepath, src_img):
-        base_name, _ = os.path.splitext(os.path.basename(filepath))
+        base_name, orig_format = os.path.splitext(os.path.basename(filepath))
         logger.info('Processing file "%s"', filepath)
         dst_filepath = os.path.join(
-            self.destination, '%s%s.%s' % (base_name, self.suffix, self.format)
+            self.destination, '%s%s.%s' % (base_name, self.suffix, self.format or orig_format[1:])
         )
         dst_img = self._create_watermarked(src_img)
         dst_img.save(dst_filepath)
