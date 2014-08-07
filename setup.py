@@ -15,7 +15,7 @@ setup(
     packages=find_packages('src'),
     scripts=['bin/wm-reader', 'bin/wm-writer'],
     version=watermarks.__version__,
-    description='Library for adding/reading watermarks from images. Currently visible and LSB watermark methods are supported.',
+    description='Do you want to protect your pictures? Or do you want to include information into your pictures (e.g. to who it was delivered)? Then this library is designed right for you! Currently visible and LSB watermark methods are supported. You can also add your own protection methods.',
     author='Vladimir Chovanec',
     author_email='vladimir.chovanec.zc@gmail.com',
     maintainer_email='watermarks.py@gmail.com',
