@@ -11,7 +11,9 @@ from . import WM1_1, WM1_255, WM1_255_JPG
 
 
 def run_and_assert(*args, **kwargs):
-    run_reader_and_assert(Lsb, *args, **kwargs)
+    bands = kwargs.pop('bands', None)
+    return run_reader_and_assert(Lsb, bands=bands,
+        bands_are_different=bool(bands), *args, **kwargs)
 
 
 def test_g_gif():
@@ -81,7 +83,7 @@ def test_dir(dst_dir):
     data_dir_path = create_data_dir(os.path.join(dst_dir, 'reader_dir'), filenames)
     filepath = os.path.join(DATA_DIR, 'shape1-g-l0.png')
 
-    lsb = Lsb(dst_dir, 'png')
+    lsb = Lsb(destination=dst_dir, format_='png')
     generated_filepaths = lsb.run([data_dir_path, filepath])
     generated_filenames = set([os.path.basename(f) for f in generated_filepaths])
 
@@ -91,3 +93,11 @@ def test_dir(dst_dir):
     assert_true('gen-%s-g_L.png' % IM_PREFIX in generated_filenames)
     assert_true('shape1-g-l0_L.png' in generated_filenames)
     assert_equal(len(generated_filenames), 5)
+
+
+def test_bands_rgb():
+    run_and_assert('shape1-rgb-l0.png', [WM1_255], bands=['r', 'c'])
+
+
+def test_bands_g():
+    run_and_assert('shape1-g-l0.png', [WM1_255], bands=['l'])

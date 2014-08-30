@@ -54,21 +54,25 @@ def create_data_dir(dir_path, filenames):
 
 
 @in_tmp
-def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=None):
+def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=None, bands_are_different=False, **kwargs):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
-    reader = reader_class(dst_dir, ext.lstrip('.'))
+    reader = reader_class(destination=dst_dir, format_=ext.lstrip('.'), **kwargs)
     results = list(reader.run([filepath]))
     if wm_data is None:
         assert_equal(len(results), 0)
         return
     src_img = Image.open(filepath)
-    assert_equal(len(results), len(src_img.getbands()))
-    for res_filepath in results:
+    if bands_are_different:
+        assert_equal(len(results), len(wm_data))
+    else:
+        assert_equal(len(results), len(src_img.getbands()))
+    for i, res_filepath in enumerate(results):
         res_img = Image.open(res_filepath)
         res_img.load()
-        assert_equal(list(res_img.getdata()), wm_data)
+        expected_data = wm_data[i] if bands_are_different else wm_data
+        assert_equal(list(res_img.getdata()), expected_data)
 
 
 @in_tmp
