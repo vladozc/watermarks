@@ -52,6 +52,7 @@ class Lsb(BaseReader):
         bands = src_img.split()
         for band_name, band in zip(src_img.getbands(), bands):
             if not self._band_is_used(band_name):
+                dst_imgs.append(None)
                 continue
             bw = band.point(convert)
             dst_band = 'P' if src_img.mode == 'P' else 'L'

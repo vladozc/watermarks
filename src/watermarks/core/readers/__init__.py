@@ -39,6 +39,8 @@ class BaseReader(BaseMethod):
         dst_imgs = self._create_watermarked(src_img)
         class_name = self.__class__.__name__.lower()
         for band_name, dst_img in zip(src_img.getbands(), dst_imgs):
+            if not dst_img:
+                continue
             dst_filepath = os.path.join(self.destination, '%s_%s%s%s.%s' % (
                 base_name, band_name,
                 '_%s' % class_name if self.is_in_chain else '',
