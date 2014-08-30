@@ -74,7 +74,7 @@ def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=Non
 @in_tmp
 def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
                           wm_data=None, ext=None, width=None, height=None,
-                          position=''):
+                          position='', bands_are_different=False, **kwargs):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
@@ -84,7 +84,8 @@ def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
         img = Image.open(filepath)
         width, height = img.size
     wm = create_watermark(wm_filepath, width=width, height=height, position=position)
-    writer = writer_class(dst_dir, ext.lstrip('.'), wm, suffix, position)
+    writer = writer_class(destination=dst_dir, format_=ext.lstrip('.'),
+        wm=wm, suffix=suffix, position=position, **kwargs)
     results = list(writer.run([filepath]))
     if wm_data is None:
         assert_equal(len(results), 0)
@@ -93,5 +94,6 @@ def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
     res_filepath = results[0]
     res_img = Image.open(res_filepath)
     res_img.load()
-    for band in res_img.split():
-        assert_equal(list(band.getdata()), wm_data)
+    for i, band in enumerate(res_img.split()):
+        expected_data = wm_data[i] if bands_are_different else wm_data
+        assert_equal(list(band.getdata()), expected_data)

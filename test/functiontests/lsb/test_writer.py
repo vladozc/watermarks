@@ -9,7 +9,7 @@ from .. import (
     create_data_dir,
 )
 from . import (
-    WM1_WM, WM1_WM_JPG, WM2,
+    WM1_WM, WM1_WM_JPG, WM2, SHAPE1,
     WM_SMALL_TL, WM_SMALL_T, WM_SMALL_TR,
     WM_SMALL_L, WM_SMALL_C, WM_SMALL_R,
     WM_SMALL_BL, WM_SMALL_B, WM_SMALL_BR,
@@ -20,7 +20,9 @@ from . import (
 
 
 def run_lsb_and_assert(*args, **kwargs):
-    return run_writer_and_assert(Lsb, *args, **kwargs)
+    bands = kwargs.pop('bands', None)
+    return run_writer_and_assert(Lsb, bands=bands,
+        bands_are_different=bool(bands), *args, **kwargs)
 
 
 def small(wm, pos):
@@ -194,7 +196,7 @@ def test_dir(dst_dir):
     suffix = '_watermarked_test'
 
     wm = create_watermark(os.path.join(DATA_DIR, 'shape1-g-l0.png'))
-    lsb = Lsb(dst_dir, 'png', wm, suffix)
+    lsb = Lsb(destination=dst_dir, format_='png', wm=wm, suffix=suffix)
     generated_filepaths = lsb.run([data_dir_path, filepath])
     generated_filenames = set([os.path.basename(f) for f in generated_filepaths])
 
@@ -202,3 +204,13 @@ def test_dir(dst_dir):
     assert_true('gen-%s-g%s.png' % (IM_PREFIX, suffix) in generated_filenames)
     assert_true('shape1-g-l0%s.png' % suffix in generated_filenames)
     assert_equal(len(generated_filenames), 3)
+
+
+def test_bands_rgb():
+    run_lsb_and_assert('shape1-rgb-l0.png', 'wm-png-24-16b.png',
+        [WM1_WM, SHAPE1, SHAPE1], bands=['r', 'c'])
+
+
+def test_bands_g():
+    run_lsb_and_assert('shape1-g-l0.png', 'wm-png-24-16b.png',
+        [WM1_WM], bands=['l'])
