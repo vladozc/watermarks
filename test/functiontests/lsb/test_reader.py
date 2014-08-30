@@ -13,7 +13,7 @@ from . import WM1_1, WM1_255, WM1_255_JPG
 def run_and_assert(*args, **kwargs):
     bands = kwargs.pop('bands', None)
     return run_reader_and_assert(Lsb, bands=bands,
-        bands_are_different=bool(bands), *args, **kwargs)
+        bands_are_filtered=bool(bands), *args, **kwargs)
 
 
 def test_g_gif():

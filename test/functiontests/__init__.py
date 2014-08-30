@@ -54,7 +54,7 @@ def create_data_dir(dir_path, filenames):
 
 
 @in_tmp
-def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=None, bands_are_different=False, **kwargs):
+def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=None, bands_are_filtered=False, **kwargs):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
@@ -64,21 +64,21 @@ def run_reader_and_assert(dst_dir, reader_class, filename, wm_data=None, ext=Non
         assert_equal(len(results), 0)
         return
     src_img = Image.open(filepath)
-    if bands_are_different:
+    if bands_are_filtered:
         assert_equal(len(results), len(wm_data))
     else:
         assert_equal(len(results), len(src_img.getbands()))
     for i, res_filepath in enumerate(results):
         res_img = Image.open(res_filepath)
         res_img.load()
-        expected_data = wm_data[i] if bands_are_different else wm_data
+        expected_data = wm_data[i] if bands_are_filtered else wm_data
         assert_equal(list(res_img.getdata()), expected_data)
 
 
 @in_tmp
 def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
                           wm_data=None, ext=None, width=None, height=None,
-                          position='', bands_are_different=False, **kwargs):
+                          position='', bands_are_filtered=False, **kwargs):
     base, f_ext = os.path.splitext(filename)
     ext = ext or f_ext
     filepath = os.path.join(DATA_DIR, filename)
@@ -99,5 +99,5 @@ def run_writer_and_assert(dst_dir, writer_class, filename, wm_filename,
     res_img = Image.open(res_filepath)
     res_img.load()
     for i, band in enumerate(res_img.split()):
-        expected_data = wm_data[i] if bands_are_different else wm_data
+        expected_data = wm_data[i] if bands_are_filtered else wm_data
         assert_equal(list(band.getdata()), expected_data)

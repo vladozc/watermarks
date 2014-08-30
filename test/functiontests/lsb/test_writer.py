@@ -22,7 +22,7 @@ from . import (
 def run_lsb_and_assert(*args, **kwargs):
     bands = kwargs.pop('bands', None)
     return run_writer_and_assert(Lsb, bands=bands,
-        bands_are_different=bool(bands), *args, **kwargs)
+        bands_are_filtered=bool(bands), *args, **kwargs)
 
 
 def small(wm, pos):
