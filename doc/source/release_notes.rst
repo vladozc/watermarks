@@ -1,6 +1,14 @@
 Release notes
 =============
 
+0.4 (01.09.2014)
+----------------
+- add position argument with restricted values
+- rename executables wm_reader/wm_writer to wm-reader/wm-writer
+- make destination format same as input (by default)
+- write watermark only to specified bands
+- read only specified bands
+
 0.3 (01.07.2014)
 ----------------
 - read/write multiple watermarks (like in chain)
