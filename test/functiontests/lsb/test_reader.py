@@ -41,28 +41,28 @@ def test_rgb_l9_png():
 
 
 def test_gen_l_bmp():
-    run_and_assert('gen-%s-g.bmp' % IM_PREFIX, WM1_255)
+    run_and_assert('gen-{0}-g.bmp'.format(IM_PREFIX), WM1_255)
 
 
 # comment out due to Pillow 2.4.0
 #def test_gen_l_gif():
-#    run_and_assert('gen-%s-g.gif' % IM_PREFIX, WM1_255)
+#    run_and_assert('gen-{0}-g.gif'.format(IM_PREFIX), WM1_255)
 
 
 def test_gen_l_png():
-    run_and_assert('gen-%s-g.png' % IM_PREFIX, WM1_255)
+    run_and_assert('gen-{0}-g.png'.format(IM_PREFIX), WM1_255)
 
 
 def test_gen_rgb_bmp():
-    run_and_assert('gen-%s-rgb.bmp' % IM_PREFIX, WM1_255)
+    run_and_assert('gen-{0}-rgb.bmp'.format(IM_PREFIX), WM1_255)
 
 
 def test_gen_rgb_jpg():
-    run_and_assert('gen-%s-rgb.jpg' % IM_PREFIX, WM1_255_JPG, ext='.png')
+    run_and_assert('gen-{0}-rgb.jpg'.format(IM_PREFIX), WM1_255_JPG, ext='.png')
 
 
 def test_gen_rgb_png():
-    run_and_assert('gen-%s-rgb.png' % IM_PREFIX, WM1_255)
+    run_and_assert('gen-{0}-rgb.png'.format(IM_PREFIX), WM1_255)
 
 
 def test_unsupported_format():
@@ -79,7 +79,7 @@ def test_not_exists():
 
 @in_tmp
 def test_dir(dst_dir):
-    filenames = ['gen-%s-rgb.png' % IM_PREFIX, 'gen-%s-g.png' % IM_PREFIX]
+    filenames = ['gen-{0}-rgb.png'.format(IM_PREFIX), 'gen-{0}-g.png'.format(IM_PREFIX)]
     data_dir_path = create_data_dir(os.path.join(dst_dir, 'reader_dir'), filenames)
     filepath = os.path.join(DATA_DIR, 'shape1-g-l0.png')
 
@@ -87,10 +87,10 @@ def test_dir(dst_dir):
     generated_filepaths = lsb.run([data_dir_path, filepath])
     generated_filenames = set([os.path.basename(f) for f in generated_filepaths])
 
-    assert_true('gen-%s-rgb_R.png' % IM_PREFIX in generated_filenames)
-    assert_true('gen-%s-rgb_G.png' % IM_PREFIX in generated_filenames)
-    assert_true('gen-%s-rgb_B.png' % IM_PREFIX in generated_filenames)
-    assert_true('gen-%s-g_L.png' % IM_PREFIX in generated_filenames)
+    assert_true('gen-{0}-rgb_R.png'.format(IM_PREFIX) in generated_filenames)
+    assert_true('gen-{0}-rgb_G.png'.format(IM_PREFIX) in generated_filenames)
+    assert_true('gen-{0}-rgb_B.png'.format(IM_PREFIX) in generated_filenames)
+    assert_true('gen-{0}-g_L.png'.format(IM_PREFIX) in generated_filenames)
     assert_true('shape1-g-l0_L.png' in generated_filenames)
     assert_equal(len(generated_filenames), 5)
 

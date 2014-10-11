@@ -41,10 +41,12 @@ class BaseReader(BaseMethod):
         for band_name, dst_img in zip(src_img.getbands(), dst_imgs):
             if not dst_img:
                 continue
-            dst_filepath = os.path.join(self.destination, '%s_%s%s%s.%s' % (
-                base_name, band_name,
-                '_%s' % class_name if self.is_in_chain else '',
-                self.suffix, self.format or orig_format[1:]))
+            dst_filename = '{base}_{band}{chain}{suffix}.{format}'.format(
+                base=base_name, band=band_name,
+                chain='_{0}'.format(class_name) if self.is_in_chain else '',
+                suffix=self.suffix, format=self.format or orig_format[1:],
+            )
+            dst_filepath = os.path.join(self.destination, dst_filename)
             dst_img.save(dst_filepath)
             logger.info('Generated file "%s".', dst_filepath)
             generated_filepaths.append(dst_filepath)

@@ -57,37 +57,37 @@ def reader(dst_dir, src_filename, gen_filenames, method, format_=None):
 
 
 def test_reader_lsb():
-    src_filename = 'gen-%s-g.png' % IM_PREFIX
-    gen_filenames = ['gen-%s-g_L_watermarked_test.jpg' % IM_PREFIX]
+    src_filename = 'gen-{0}-g.png'.format(IM_PREFIX)
+    gen_filenames = ['gen-{0}-g_L_watermarked_test.jpg'.format(IM_PREFIX)]
     reader(src_filename, gen_filenames, 'lsb', format_='jpg')
 
 
 def test_reader_lsb_default_format():
-    src_filename = 'gen-%s-g.bmp' % IM_PREFIX
-    gen_filenames = ['gen-%s-g_L_watermarked_test.png' % IM_PREFIX]
+    src_filename = 'gen-{0}-g.bmp'.format(IM_PREFIX)
+    gen_filenames = ['gen-{0}-g_L_watermarked_test.png'.format(IM_PREFIX)]
     reader(src_filename, gen_filenames, 'lsb')
 
 
 def test_writer_lsb():
-    src_filename = 'gen-%s-g.png' % IM_PREFIX
-    gen_filename = 'gen-%s-g_watermarked_test.jpg' % IM_PREFIX
+    src_filename = 'gen-{0}-g.png'.format(IM_PREFIX)
+    gen_filename = 'gen-{0}-g_watermarked_test.jpg'.format(IM_PREFIX)
     writer(src_filename, gen_filename, 'lsb', format_='jpg')
 
 
 def test_writer_lsb_default_format():
-    src_filename = 'gen-%s-g.bmp' % IM_PREFIX
-    gen_filename = 'gen-%s-g_watermarked_test.png' % IM_PREFIX
+    src_filename = 'gen-{0}-g.bmp'.format(IM_PREFIX)
+    gen_filename = 'gen-{0}-g_watermarked_test.png'.format(IM_PREFIX)
     writer(src_filename, gen_filename, 'lsb')
 
 
 def test_writer_visible():
-    src_filename = 'gen-%s-g.png' % IM_PREFIX
-    gen_filename = 'gen-%s-g_watermarked_test.jpg' % IM_PREFIX
+    src_filename = 'gen-{0}-g.png'.format(IM_PREFIX)
+    gen_filename = 'gen-{0}-g_watermarked_test.jpg'.format(IM_PREFIX)
     writer(src_filename, gen_filename, 'visible', format_='jpg')
 
 
 def test_writer_visible_default_format():
-    src_filename = 'gen-%s-g.bmp' % IM_PREFIX
-    gen_filename = 'gen-%s-g_watermarked_test.bmp' % IM_PREFIX
+    src_filename = 'gen-{0}-g.bmp'.format(IM_PREFIX)
+    gen_filename = 'gen-{0}-g_watermarked_test.bmp'.format(IM_PREFIX)
     writer(src_filename, gen_filename, 'visible')
 

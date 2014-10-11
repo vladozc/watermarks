@@ -19,11 +19,11 @@ def generate_img_modes_types(dst_path, prefix):
 
     for format_ in ('png', 'gif', 'bmp'):
         img = Image.merge('L', [band_wm])
-        img.save(os.path.join(dst_path, 'gen-%s-g.%s' % (prefix, format_)))
+        img.save(os.path.join(dst_path, 'gen-{0}-g.{1}'.format(prefix, format_)))
 
     for format_ in ('png', 'bmp', 'jpg'):
         img = Image.merge('RGB', [band_wm]*3)
-        img.save(os.path.join(dst_path, 'gen-%s-rgb.%s' % (prefix, format_)))
+        img.save(os.path.join(dst_path, 'gen-{0}-rgb.{1}'.format(prefix, format_)))
 
 
 def generate_img2_modes_types(dst_path, prefix):
@@ -33,7 +33,7 @@ def generate_img2_modes_types(dst_path, prefix):
 
     for format_ in ('png', ):
         img = Image.merge('RGB', [band_wm]*3)
-        img.save(os.path.join(dst_path, 'gen2-%s-rgb.%s' % (prefix, format_)))
+        img.save(os.path.join(dst_path, 'gen2-{0}-rgb.{1}'.format(prefix, format_)))
 
 
 def generate_wm_modes(dst_path, prefix):
@@ -45,24 +45,24 @@ def generate_wm_modes(dst_path, prefix):
     band_a.putdata([255]*256)
 
     wm_1 = Image.merge('1', [band_1])
-    wm_1.save(os.path.join(dst_path, 'gen-%s-wm-1.png' % prefix))
+    wm_1.save(os.path.join(dst_path, 'gen-{0}-wm-1.png'.format(prefix)))
 
     wm_l = Image.merge('L', [band_8])
-    wm_l.save(os.path.join(dst_path, 'gen-%s-wm-l.png' % prefix))
+    wm_l.save(os.path.join(dst_path, 'gen-{0}-wm-l.png'.format(prefix)))
 
     wm_rgb = Image.merge('RGB', [band_8, band_8, band_8])
-    wm_rgb.save(os.path.join(dst_path, 'gen-%s-wm-rgb.png' % prefix))
+    wm_rgb.save(os.path.join(dst_path, 'gen-{0}-wm-rgb.png'.format(prefix)))
 
     wm_rgba = Image.merge('RGBA', [band_8, band_8, band_8, band_a])
-    wm_rgba.save(os.path.join(dst_path, 'gen-%s-wm-rgba.png' % prefix))
+    wm_rgba.save(os.path.join(dst_path, 'gen-{0}-wm-rgba.png'.format(prefix)))
 
     #wm_cmyk = Image.merge('CMYK', [band_8, band_8, band_8, band_8])
-    #wm_cmyk.save(os.path.join(dst_path, 'gen-%s-wm-cmyk.jpg' % prefix))
+    #wm_cmyk.save(os.path.join(dst_path, 'gen-{0}-wm-cmyk.jpg'.format(prefix)))
 
     band_img = Image.new('L', (16, 16))
     band_img.putdata([255]*64 + [0]*64 + [255]*64 + [0]*64)
     img = Image.merge('L', [band_img])
-    img.save(os.path.join(dst_path, 'gen-%s-img.png' % prefix))
+    img.save(os.path.join(dst_path, 'gen-{0}-img.png'.format(prefix)))
 
 
 def generate_unsupported(dst_path):

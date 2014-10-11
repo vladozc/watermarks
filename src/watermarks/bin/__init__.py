@@ -7,7 +7,7 @@ from watermarks import __version__ as version
 
 class WMParser(argparse.ArgumentParser):
     def error(self, message):
-        sys.stderr.write('error: %s\n' % message)
+        sys.stderr.write('error: {0}\n'.format(message))
         self.print_help()
         sys.exit(2)
 

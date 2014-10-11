@@ -11,7 +11,7 @@ def selftest(tmp='/tmp'):
         _clean(filepath)
         return True
     except Exception as edata:
-        print('Error: %s' % edata)
+        print('Error: {0}'.format(edata))
         return False
 
 

@@ -27,14 +27,14 @@ def run_lsb_and_assert(*args, **kwargs):
 
 def small(wm, pos):
     run_lsb_and_assert(
-        'gen-%s-wm-rgb.png' % WM_PREFIX, 'rgb-24-16b.png', wm,
+        'gen-{0}-wm-rgb.png'.format(WM_PREFIX), 'rgb-24-16b.png', wm,
          width=10, height=5, position=pos,
     )
 
 
 def big(wm, pos):
     run_lsb_and_assert(
-        'gen2-%s-rgb.png' % IM_PREFIX, 'rgb-24-16b.png', wm,
+        'gen2-{0}-rgb.png'.format(IM_PREFIX), 'rgb-24-16b.png', wm,
          width=5, height=3, position=pos,
     )
 
@@ -64,44 +64,44 @@ def test_rgb_l9_png():
 
 
 def test_gen_l_bmp():
-    run_lsb_and_assert('gen-%s-g.bmp' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
+    run_lsb_and_assert('gen-{0}-g.bmp'.format(IM_PREFIX), 'wm-png-24-16b.png', WM1_WM)
 
 
 # comment out due to Pillow 2.4.0
 #def test_gen_l_gif():
-#    run_lsb_and_assert('gen-%s-g.gif' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
+#    run_lsb_and_assert('gen-{0}-g.gif'.format(IM_PREFIX), 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_gen_l_png():
-    run_lsb_and_assert('gen-%s-g.png' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
+    run_lsb_and_assert('gen-{0}-g.png'.format(IM_PREFIX), 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_gen_rgb_bmp():
-    run_lsb_and_assert('gen-%s-rgb.bmp' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
+    run_lsb_and_assert('gen-{0}-rgb.bmp'.format(IM_PREFIX), 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_gen_rgb_jpg():
-    run_lsb_and_assert('gen-%s-rgb.jpg' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM_JPG)
+    run_lsb_and_assert('gen-{0}-rgb.jpg'.format(IM_PREFIX), 'wm-png-24-16b.png', WM1_WM_JPG)
 
 
 def test_gen_rgb_png():
-    run_lsb_and_assert('gen-%s-rgb.png' % IM_PREFIX, 'wm-png-24-16b.png', WM1_WM)
+    run_lsb_and_assert('gen-{0}-rgb.png'.format(IM_PREFIX), 'wm-png-24-16b.png', WM1_WM)
 
 
 def test_wm_mode_1():
-    run_lsb_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-1.png' % WM_PREFIX, WM2)
+    run_lsb_and_assert('gen-{0}-img.png'.format(WM_PREFIX), 'gen-{0}-wm-1.png'.format(WM_PREFIX), WM2)
 
 
 def test_wm_mode_l():
-    run_lsb_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-l.png' % WM_PREFIX, WM2)
+    run_lsb_and_assert('gen-{0}-img.png'.format(WM_PREFIX), 'gen-{0}-wm-l.png'.format(WM_PREFIX), WM2)
 
 
 def test_wm_mode_rgb():
-    run_lsb_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-rgb.png' % WM_PREFIX, WM2)
+    run_lsb_and_assert('gen-{0}-img.png'.format(WM_PREFIX), 'gen-{0}-wm-rgb.png'.format(WM_PREFIX), WM2)
 
 
 def test_wm_mode_rgba():
-    run_lsb_and_assert('gen-%s-img.png' % WM_PREFIX, 'gen-%s-wm-rgba.png' % WM_PREFIX, WM2)
+    run_lsb_and_assert('gen-{0}-img.png'.format(WM_PREFIX), 'gen-{0}-wm-rgba.png'.format(WM_PREFIX), WM2)
 
 
 def test_small_wm_tl():
@@ -190,7 +190,7 @@ def test_not_exists():
 
 @in_tmp
 def test_dir(dst_dir):
-    filenames = ['gen-%s-rgb.png' % IM_PREFIX, 'gen-%s-g.png' % IM_PREFIX]
+    filenames = ['gen-{0}-rgb.png'.format(IM_PREFIX), 'gen-{0}-g.png'.format(IM_PREFIX)]
     data_dir_path = create_data_dir(os.path.join(dst_dir, 'writer_dir'), filenames)
     filepath = os.path.join(DATA_DIR, 'shape1-g-l0.png')
     suffix = '_watermarked_test'
@@ -200,9 +200,9 @@ def test_dir(dst_dir):
     generated_filepaths = lsb.run([data_dir_path, filepath])
     generated_filenames = set([os.path.basename(f) for f in generated_filepaths])
 
-    assert_true('gen-%s-rgb%s.png' % (IM_PREFIX, suffix) in generated_filenames)
-    assert_true('gen-%s-g%s.png' % (IM_PREFIX, suffix) in generated_filenames)
-    assert_true('shape1-g-l0%s.png' % suffix in generated_filenames)
+    assert_true('gen-{0}-rgb{1}.png'.format(IM_PREFIX, suffix) in generated_filenames)
+    assert_true('gen-{0}-g{1}.png'.format(IM_PREFIX, suffix) in generated_filenames)
+    assert_true('shape1-g-l0{0}.png'.format(suffix) in generated_filenames)
     assert_equal(len(generated_filenames), 3)
 
 

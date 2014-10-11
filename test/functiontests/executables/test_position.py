@@ -22,11 +22,11 @@ def compare_results(generated_fp, expected_fp):
 def run_and_assert(dst_dir, position=None):
     wm = os.path.join(DATA_DIR, 'white.png')
     img = os.path.join(DATA_DIR, 'black.png')
-    position_arg = ['-p%s' % position] if position else []
+    position_arg = ['-p{0}'.format(position)] if position else []
     rc = run_command([WM_WRITER, 'visible'] + position_arg + ['-w', wm, '-d', dst_dir, img])
     assert_equal(rc, 0)
     generated_fp = os.path.join(dst_dir, 'black.png')
-    expected_fp = os.path.join(DATA_DIR, 'black-%s.png' % (position or 'default', ))
+    expected_fp = os.path.join(DATA_DIR, 'black-{0}.png'.format(position or 'default'))
     compare_results(generated_fp, expected_fp)
 
 

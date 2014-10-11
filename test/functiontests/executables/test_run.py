@@ -8,8 +8,8 @@ from . import WM_WRITER, WM_READER, run_command
 
 @in_tmp
 def test_writer(dst_dir):
-    filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
-    generated_filepath = os.path.join(dst_dir, 'gen-%s-g_watermarked_test.png' % IM_PREFIX)
+    filepath = os.path.join(DATA_DIR, 'gen-{0}-g.png'.format(IM_PREFIX))
+    generated_filepath = os.path.join(dst_dir, 'gen-{0}-g_watermarked_test.png'.format(IM_PREFIX))
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
@@ -22,8 +22,8 @@ def test_writer(dst_dir):
 
 @in_tmp
 def test_writer_chain(dst_dir):
-    filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
-    generated_filepath = os.path.join(dst_dir, 'gen-%s-g_watermarked_test.png' % IM_PREFIX)
+    filepath = os.path.join(DATA_DIR, 'gen-{0}-g.png'.format(IM_PREFIX))
+    generated_filepath = os.path.join(dst_dir, 'gen-{0}-g_watermarked_test.png'.format(IM_PREFIX))
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
@@ -38,9 +38,9 @@ def test_writer_chain(dst_dir):
 
 @in_tmp
 def test_reader(dst_dir):
-    filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
+    filepath = os.path.join(DATA_DIR, 'gen-{0}-g.png'.format(IM_PREFIX))
     suffix = '_test'
-    generated_filepath = os.path.join(dst_dir, 'gen-%s-g_L%s.png' % (IM_PREFIX, suffix))
+    generated_filepath = os.path.join(dst_dir, 'gen-{0}-g_L{1}.png'.format(IM_PREFIX, suffix))
     if os.path.exists(generated_filepath):
         os.unlink(generated_filepath)
 
@@ -52,13 +52,13 @@ def test_reader(dst_dir):
 
 @in_tmp
 def test_reader_chain(dst_dir):
-    filepath = os.path.join(DATA_DIR, 'gen-%s-g.png' % IM_PREFIX)
+    filepath = os.path.join(DATA_DIR, 'gen-{0}-g.png'.format(IM_PREFIX))
     suffix = '_test'
     # TODO: use different methods. Since WM currently does not support
     # more readers methods, I cannot do it now.
     methods = ['lsb', 'lsb']
     for method in methods:
-        generated_filepath = os.path.join(dst_dir, 'gen-%s-g_L_%s%s.png' % (IM_PREFIX, method, suffix))
+        generated_filepath = os.path.join(dst_dir, 'gen-{0}-g_L_{1}{2}.png'.format(IM_PREFIX, method, suffix))
         if os.path.exists(generated_filepath):
             os.unlink(generated_filepath)
 
@@ -66,7 +66,7 @@ def test_reader_chain(dst_dir):
 
     assert_equal(rc, 0)
     for method in methods:
-        generated_filepath = os.path.join(dst_dir, 'gen-%s-g_L_%s%s.png' % (IM_PREFIX, method, suffix))
+        generated_filepath = os.path.join(dst_dir, 'gen-{0}-g_L_{1}{2}.png'.format(IM_PREFIX, method, suffix))
         assert_true(os.path.isfile(generated_filepath))
     assert_true(len(methods) > 1)
 
