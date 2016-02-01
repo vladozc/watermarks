@@ -35,7 +35,7 @@ However, the ``pillow`` dependency might need some other libraries to work prope
   Ubuntu:
       apt-get install python-dev
     or:
-      apt-get install python-dev3
+      apt-get install python3-dev
 
     and:
       apt-get install python-setuptools libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk
